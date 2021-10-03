@@ -1,0 +1,35 @@
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+  .horario{
+
+    .border-top-1{
+        border-color: #dadce0;
+    }
+
+  }
+
+  .hora{
+      margin-top: -9px;
+      font-size: 10px;
+      width: 50px;
+      color: #70757a;
+  }
+
+.div-select{
+  cursor: pointer;
+  &:hover{
+    background-color: #e8f5e9;
+  }
+}
+
+.icon {
+  opacity: 0;
+  color: green;
+  transition: all 0.5s ease-in;
+  &.active {
+      opacity: 1;
+  }
+}

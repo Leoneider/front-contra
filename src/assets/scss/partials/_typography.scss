@@ -1,0 +1,16 @@
+// Typography
+// @mixin fontFace($name) {
+// 	font-family: $name;
+// 	src: url('../fonts/#{$name}.eot');
+// 	src: url('../fonts/#{$name}.eot') format('embedded-opentype'),  url('../fonts/#{$name}.woff') format('woff'),  url('../fonts/#{$name}.ttf') format('truetype')
+// }
+// @font-face {
+// 	@include fontFace($font-general);
+// }
+// End Typography
+
+.mat-typography h1 {
+	color: $primary-color;
+	font-size: 30px;
+	font-weight: 100;
+}

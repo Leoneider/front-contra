@@ -1,0 +1,10 @@
+// Reset
+%all-transparent {
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+}
+p, a, li, span, h1, h2, h3, h4, h5, label, input, .btn, button, select {
+    font-family: $font-general
+}
+// End reset

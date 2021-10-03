@@ -1,0 +1,70 @@
+<div style="padding: 16px" *ngIf="escenario">
+  <div class="grid">
+    <div class="col-12 md:col-6 lg:col-6">
+      <mat-card class="example-card" style="max-width: 400px;">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <mat-card-title>{{ escenario.nombre }}</mat-card-title>
+          <mat-card-subtitle>{{ escenario.direccion }}</mat-card-subtitle>
+        </mat-card-header>
+        <img
+          mat-card-image
+          src="{{ escenario.imagen }}"
+          alt="Photo of a Shiba Inu"
+        />
+        <mat-card-content>
+          <h1>{{ escenario.valor | currency }}</h1>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-12 md:col-6 lg:col-6">
+      <h1 class="mb-6">Seleccione la hora disponible:</h1>
+
+      <div class="flex justify-content-center">
+        <div class="horario">
+          <div
+            class="flex"
+            style="height: 40px"
+            *ngFor="let hora of horasDisponibles"
+          >
+            <div class="hora">{{ hora.horaInicial }} PM</div>
+            <div class="border-top-1" style="width: 7px"></div>
+            <div
+              class="
+                flex
+                justify-content-end
+                align-items-center
+                border-top-1 border-right-1 border-left-1
+                div-select
+              "
+              style="width: 250px"
+              (click)="seleccionarHora(hora)"
+            >
+              <mat-icon
+                [class.active]="
+                  hora.horaInicial == horaSeleccionada.horaInicial
+                "
+                color="success"
+                class="mr-2 icon"
+                aria-hidden="false"
+                aria-label="Example home icon"
+                >check_circle_outline</mat-icon
+              >
+            </div>
+          </div>
+
+          <div class="flex">
+            <div class="hora">{{ this.escenario.horaFinal + 1 }} PM</div>
+            <div class="border-top-1" style="width: 259px"></div>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-content-center">
+        <button [disabled]= "isSeleccionado" mat-raised-button color="primary" style="margin: 16px">
+          CONFIRMAR HORA
+        </button>
+      </div>
+    </div>
+  </div>
+  
+</div>

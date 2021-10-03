@@ -1,0 +1,17 @@
+/* Add application styles & imports to this file! */
+@import "~angular-notifier/styles";
+
+@import "assets/scss/modules/var";
+@import "assets/scss/modules/mixins";
+@import "assets/scss/modules/utility";
+
+// Partials
+@import "assets/scss/partials/reset";
+@import "assets/scss/partials/grids";
+@import "assets/scss/partials/global";
+@import "assets/scss/partials/buttons";
+@import "assets/scss/partials/typography";
+@import "assets/scss/partials/keyframes";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
