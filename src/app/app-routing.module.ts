@@ -13,8 +13,8 @@ const routes: Routes = [
     children: [
       { path: 'home', loadChildren: () => import('@home/home.module').then(mod => mod.HomeModule) },
       { path: 'escenario', loadChildren: () => import('./feature/escenario/escenario.module').then(m => m.EscenarioModule) },
-      { path: 'reservar', loadChildren: () => import('./feature/apartar/apartar.module').then(m => m.ApartarModule) },
-      { path: 'usuarios', loadChildren: () => import('./feature/usuarios/usuarios.module').then(m => m.UsuariosModule) }
+      { path: 'reservar', loadChildren: () => import('./feature/reserva/apartar.module').then(m => m.ApartarModule) },
+      { path: 'usuarios', loadChildren: () => import('./feature/usuario/usuarios.module').then(m => m.UsuariosModule) }
     ],
   },
   {

@@ -37,6 +37,7 @@
                 border-top-1 border-right-1 border-left-1
                 div-select
               "
+              [class.disabled] = "!hora.isDisponible"
               style="width: 250px"
               (click)="seleccionarHora(hora)"
             >

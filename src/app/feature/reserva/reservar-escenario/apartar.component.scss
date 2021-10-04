@@ -23,6 +23,11 @@
   &:hover{
     background-color: #e8f5e9;
   }
+
+  &.disabled{
+    cursor: not-allowed;
+    background-color: #eceff1;
+  }
 }
 
 .icon {
