@@ -2,6 +2,9 @@ pipeline {
     agent {
         label 'Slave_Induccion'
     }
+    triggers {
+        pollSCM('* * * * *')
+    }
     tools {
         jdk 'JDK8_Centos' //Verisión preinstalada en la Configuración del Master
     }
