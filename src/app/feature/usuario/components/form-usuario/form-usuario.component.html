@@ -1,0 +1,26 @@
+<form class="form" [formGroup]="usuarioForm">
+  <mat-form-field class="w-full mt-3" appearance="fill">
+    <mat-label>Nombres</mat-label>
+    <input matInput placeholder="Ingrese su nombre" formControlName="nombres"/>
+  </mat-form-field>
+
+  <mat-form-field class="w-full" appearance="fill">
+    <mat-label>Apellidos</mat-label>
+    <input matInput placeholder="Ingrese su apellido" formControlName="apellidos"/>
+  </mat-form-field>
+
+  <mat-form-field class="w-full" appearance="fill">
+    <mat-label>Celular</mat-label>
+    <input matInput placeholder="Ingrese su numero celular" formControlName="celular"/>
+  </mat-form-field>
+
+  <mat-form-field class="w-full" appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="Ingrese su Email" formControlName="email"/>
+  </mat-form-field>
+
+  <mat-form-field class="w-full" appearance="fill">
+    <mat-label>Contraseña</mat-label>
+    <input matInput placeholder="Ingrese su contraseña" formControlName="contrasena"/>
+  </mat-form-field>
+</form>

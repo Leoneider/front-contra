@@ -5,6 +5,7 @@ import { ApartarRoutingModule } from './apartar-routing.module';
 import { ApartarComponent } from './reservar-escenario/apartar.component';
 import { SharedModule } from '@shared/shared.module';
 import { ConfirmarReservaComponent } from './confirmar-reserva/confirmar-reserva.component';
+import { UsuariosModule } from '../usuario/usuarios.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ConfirmarReservaComponent } from './confirmar-reserva/confirmar-reserva
   imports: [
     CommonModule,
     ApartarRoutingModule,
-    SharedModule
+    SharedModule,
+    UsuariosModule
   ]
 })
 export class ApartarModule { }

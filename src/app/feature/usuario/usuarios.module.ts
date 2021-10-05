@@ -3,15 +3,22 @@ import { CommonModule } from '@angular/common';
 
 import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { FormUsuarioComponent } from './components/form-usuario/form-usuario.component';
+import { SharedModule } from '@shared/shared.module';
 
 
 @NgModule({
   declarations: [
-    UsuariosComponent
+    UsuariosComponent,
+    FormUsuarioComponent
   ],
   imports: [
     CommonModule,
-    UsuariosRoutingModule
+    UsuariosRoutingModule,
+    SharedModule
+  ],
+  exports: [
+    FormUsuarioComponent
   ]
 })
 export class UsuariosModule { }

@@ -1,4 +1,10 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpService } from '@core/services/http.service';
+import { NotificationService } from '@core/services/notification.service';
+import { NotifierModule } from 'angular-notifier';
+import { ReservaService } from '../shared/services/reserva.service';
 
 import { ApartarComponent } from './apartar.component';
 
@@ -8,7 +14,9 @@ describe('ApartarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ApartarComponent ]
+      imports: [RouterTestingModule, NotifierModule, HttpClientTestingModule],
+      declarations: [ ApartarComponent ],
+      providers: [HttpService, NotificationService, ReservaService]
     })
     .compileComponents();
   });

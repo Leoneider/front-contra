@@ -1,19 +1,18 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { HttpService } from '@core/services/http.service';
-import { NotifierModule } from 'angular-notifier';
 
-import { ReservaService } from './reserva.service';
+import { UsuarioService } from './usuario.service';
 
-describe('ReservaService', () => {
-  let service: ReservaService;
+describe('UsuarioService', () => {
+  let service: UsuarioService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, NotifierModule],
+      imports: [HttpClientTestingModule],
       providers: [HttpService]
     });
-    service = TestBed.inject(ReservaService);
+    service = TestBed.inject(UsuarioService);
   });
 
   it('should be created', () => {

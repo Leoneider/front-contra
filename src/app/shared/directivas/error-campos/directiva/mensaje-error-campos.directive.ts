@@ -67,7 +67,7 @@ import { ErrorCamposPlantillaComponent } from '../componente/error-campos-planti
 })
 export class MensajeErrorCamposDirective implements OnInit, OnDestroy, AfterViewChecked {
   @Input() private errores = {};
-  @Input() private validacionInicial = true;
+  @Input() private validacionInicial = false;
   @Input() private validaciones: ValidatorFn[];
   private nombreClaseError = 'clase-invalido';
   private componente: ComponentRef<ErrorCamposPlantillaComponent>;

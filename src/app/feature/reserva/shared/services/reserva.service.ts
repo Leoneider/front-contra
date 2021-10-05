@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '@core/services/http.service';
+import { Escenario } from 'src/app/feature/escenario/shared/model/escenario';
 import { environment } from 'src/environments/environment';
+import { HoraDisponible } from '../model/hora-disponibles';
 import { Reserva } from '../model/reserva';
 
 @Injectable({
@@ -9,6 +11,8 @@ import { Reserva } from '../model/reserva';
 export class ReservaService {
 
   reserva:Reserva;
+  escenarioSeleccionado:Escenario;
+  horaSelecionada:HoraDisponible;
   
   constructor(protected http: HttpService) {}
 
@@ -21,12 +25,12 @@ export class ReservaService {
   }
 
   public guardar(reserva: Reserva) {
-    return this.http.doPost<Reserva, boolean>(`${environment.endpoint}/escenario`, reserva,
+    return this.http.doPost<Reserva, boolean>(`${environment.endpoint}/reserva`, reserva,
                                                 this.http.optsName('crear/actualizar reservas'));
   }
 
   public eliminar(reserva: Reserva) {
-    return this.http.doDelete<boolean>(`${environment.endpoint}/escenario/${reserva.id}`,
+    return this.http.doDelete<boolean>(`${environment.endpoint}/reserva/${reserva.id}`,
                                                  this.http.optsName('eliminar reservas'));
   }
 }

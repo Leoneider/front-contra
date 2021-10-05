@@ -32,8 +32,6 @@
             <div
               class="
                 flex
-                justify-content-end
-                align-items-center
                 border-top-1 border-right-1 border-left-1
                 div-select
               "
@@ -41,7 +39,14 @@
               style="width: 250px"
               (click)="seleccionarHora(hora)"
             >
-              <mat-icon
+          
+
+              <div class="flex-auto flex align-items-center justify-content-center">
+                <span *ngIf="!hora.isDisponible" class="text-center reservada" >RESERVADA</span>
+              </div>
+
+              <div *ngIf="hora.isDisponible" class="flex-auto flex align-items-center justify-content-end">
+                <mat-icon
                 [class.active]="
                   hora.horaInicial == horaSeleccionada.horaInicial
                 "
@@ -51,6 +56,10 @@
                 aria-label="Example home icon"
                 >check_circle_outline</mat-icon
               >
+
+              </div>
+              
+             
             </div>
           </div>
 
@@ -61,7 +70,7 @@
         </div>
       </div>
       <div class="flex justify-content-center">
-        <button [disabled]= "isSeleccionado" mat-raised-button color="primary" style="margin: 16px">
+        <button (click)="confirmarHora()" [disabled]= "isSeleccionado" mat-raised-button color="primary" style="margin: 16px" >
           CONFIRMAR HORA
         </button>
       </div>

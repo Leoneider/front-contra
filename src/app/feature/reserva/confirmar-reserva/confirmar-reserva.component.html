@@ -1,1 +1,63 @@
-<p>confirmar-reserva works!</p>
+<div style="padding: 16px">
+  <div class="grid">
+    <div class="col-12 md:col-6 lg:col-6">
+      <h1>Confirma tu reserva</h1>
+
+      <div class="flex justify-content-center align-items-center" *ngIf="escenarioSeleccionado">
+        <mat-card style="width: 250px">
+          <div class="flex flex-auto">
+            <div style="width: 50%">
+              <p>Producto</p>
+              <p>Valor</p>
+            </div>
+            <div>
+              <p>{{ escenarioSeleccionado.nombre }}</p>
+              <p>{{ escenarioSeleccionado.valor }}</p>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="flex">
+            <div style="width: 50%">
+              <p>Pagas</p>
+            </div>
+            <div>
+              <p>{{ escenarioSeleccionado.valor }}</p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-6 lg:col-6">
+      <h1>Ingresa tus datos:</h1>
+      <div class="flex flex-column justify-content-center align-items-center">
+        <mat-card class="example-full-width">
+            <div>
+                <mat-form-field validar class="example-full-width" appearance="fill">
+                    <mat-label>Documento</mat-label>
+                    <input
+                      type="email"
+                      matInput
+                      [formControl]="documento"
+                      placeholder="Ingresa el número de tu documento"
+                    />
+                  </mat-form-field>
+            </div>
+         
+
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoadingConsulta"></mat-progress-bar>
+          <mat-divider></mat-divider>
+
+          <app-form-usuario [usuario]="usuario" *ngIf="!isUsuarioEncontrado"></app-form-usuario>
+          
+
+          <div class="flex justify-content-end">
+            <button (click)="confirmar()" [disabled]=habilitarBoton mat-raised-button color="primary" style="margin: 16px" >
+              CONFIRMAR
+            </button>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
