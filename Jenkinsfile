@@ -2,7 +2,6 @@ pipeline {
     agent {
         label 'Slave_Induccion'
     }
-
      triggers {
         pollSCM('* * * * *')
     }
@@ -37,12 +36,6 @@ pipeline {
                 sh 'npm run test'
             }
         }
-        // stage('Test end-to-end') {
-        //     steps {
-        //         echo '------------>Testing Protractor<------------'
-        //         sh 'npm run e2e'
-        //     }
-        // }
         stage('Sonar Scanner Coverage') {
             steps{
                 echo '------------>Análisis de código estático<------------'
