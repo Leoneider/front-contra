@@ -1,21 +1,39 @@
 pipeline {
-    agent any
-    stages{
-        stage('Checkout') {
+    agent {
+        label 'Slave_Induccion'
+    }
+
+     triggers {
+        pollSCM('* * * * *')
+    }
+    tools {
+        jdk 'JDK8_Centos' //Verisión preinstalada en la Configuración del Master
+    }
+    stages {
+        stage('Checkout'){
             steps{
                 echo "------------>Checkout<------------"
-                checkout scm
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: '*/main']], 
+                    doGenerateSubmoduleConfigurations: false, 
+                    extensions: [], 
+                    gitTool: 'Default', 
+                    submoduleCfg: [], 
+                    userRemoteConfigs: [[
+                        credentialsId: 'GitHub_DevOps42', 
+                        url:'https://github.com/Leoneider/contra'
+                    ]]
+                ])
             }
         }
-        stage('NPM Install') {
+        stage('Install') {
             steps {
-                echo '------------>Installing<------------'
                 sh 'npm install'
             }
         }
-        stage('Unit Test') {
+        stage('Tests') {
             steps {
-                echo '------------>Testing<------------'
                 sh 'npm run test'
             }
         }
@@ -25,20 +43,31 @@ pipeline {
                 sh 'npm run e2e'
             }
         }
-        stage('Static Code Analysis') {
+        stage('Sonar Scanner Coverage') {
             steps{
                 echo '------------>Análisis de código estático<------------'
                 withSonarQubeEnv('Sonar') {
-                    sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner"
+                    sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner" 
                 }
             }
         }
-
-        stage('Build') {
+        stage('Build'){
             steps {
                 echo "------------>Building<------------"
-                sh 'npm run build'
+                sh 'ng build --prod '
             }
         }
-    } 
+    }
+    post{
+        always {
+            echo 'This will always run'
+        }
+        success {
+            echo 'This will run only if successful'
+        }
+        failure {
+            echo 'This will run only if failed'
+            mail (to: 'leoneider.trigos@ceiba.com.co', subject: "Failed Pipeline:${currentBuild.fullDisplayName}",body: "Something is wrong with ${env.BUILD_URL}") 
+        }
+    }
 }
