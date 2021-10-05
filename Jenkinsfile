@@ -2,9 +2,6 @@ pipeline {
     agent {
         label 'Slave_Induccion'
     }
-     triggers {
-        pollSCM('* * * * *')
-    }
     tools {
         jdk 'JDK8_Centos' //Verisión preinstalada en la Configuración del Master
     }
@@ -12,18 +9,7 @@ pipeline {
         stage('Checkout'){
             steps{
                 echo "------------>Checkout<------------"
-                checkout([
-                    $class: 'GitSCM', 
-                    branches: [[name: '*/main']], 
-                    doGenerateSubmoduleConfigurations: false, 
-                    extensions: [], 
-                    gitTool: 'Default', 
-                    submoduleCfg: [], 
-                    userRemoteConfigs: [[
-                        credentialsId: 'GitHub_DevOps42', 
-                        url:'https://github.com/Leoneider/contra'
-                    ]]
-                ])
+                checkout scm
             }
         }
         stage('Install') {
@@ -36,13 +22,19 @@ pipeline {
                 sh 'npm run test'
             }
         }
-        stage('Sonar Scanner Coverage') {
+        stage('Test end-to-end') {
             steps{
-                echo '------------>Análisis de código estático<------------'
-                withSonarQubeEnv('Sonar') {
-                    sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner" 
-                }
+                echo "------------>Testing Protractor<------------"
+                sh 'npm run e2e'
             }
+        }
+        stage('Sonar Scanner Coverage') {
+        steps{
+            echo '------------>Análisis de código estático<------------'
+            withSonarQubeEnv('Sonar') {
+                sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner" 
+            }
+        }
         }
         stage('Build'){
             steps {
