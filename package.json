@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json -o",
     "build": "ng build --prod",
-    "test": "ng test --watch=false --browsers=ChromeHeadless",
+    "test": "ng test --watch=false --browsers=ChromeHeadless --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~11.2.8",
     "@angular/router": "~11.2.8",
     "angular-notifier": "^9.1.0",
+    "karma-sonarqube-reporter": "^1.4.0",
     "ngx-cookie-service": "^11.0.2",
     "primeflex": "^3.0.1",
     "rxjs": "~6.6.7",
