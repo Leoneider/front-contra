@@ -9,6 +9,7 @@ import { UsuarioService } from '../../usuario/shared/service/usuario.service';
 import { HoraDisponible } from '../shared/model/hora-disponibles';
 import { Reserva } from '../shared/model/reserva';
 import { ReservaService } from '../shared/services/reserva.service';
+const timeWait = 1500;
 
 @Component({
   selector: 'app-confirmar-reserva',
@@ -21,6 +22,7 @@ export class ConfirmarReservaComponent implements OnInit {
   escenarioSeleccionado: Escenario;
   horaSelecionada: HoraDisponible;
   usuario: Usuario;
+  
 
   documento = new FormControl('', [Validators.required]);
 
@@ -53,23 +55,22 @@ export class ConfirmarReservaComponent implements OnInit {
 
   isLoadingConsulta: boolean;
   isUsuarioEncontrado = false;
-  timeWait =  1500;
   consultarDocumento() {
     this.documento.valueChanges
-      .pipe(debounceTime(this.timeWait), distinctUntilChanged())
-      .subscribe((res:string) => {
+      .pipe(debounceTime(timeWait), distinctUntilChanged())
+      .subscribe((res: string) => {
         this.isLoadingConsulta = true;
         this.isUsuarioEncontrado = false;
         this.usuario = null;
-        this.usuarioService.consultarPorDocumento(res).subscribe(
-          (res:Usuario[]) => {
+        this.usuarioService
+          .consultarPorDocumento(res)
+          .subscribe((res: Usuario[]) => {
             this.isLoadingConsulta = false;
             if (res[0]) {
               this.usuario = res[0];
               this.isUsuarioEncontrado = true;
             }
-          }
-        );
+          });
       });
   }
 
@@ -84,12 +85,6 @@ export class ConfirmarReservaComponent implements OnInit {
   }
 
   guardarReserva() {
-    console.log(
-      this.reservaService.escenarioSeleccionado.id,
-      this.reservaService.horaSelecionada.horaInicial,
-      this.reservaService.escenarioSeleccionado.valor
-    );
-
     let reserva: Reserva = {
       id: 0,
       fecha: '10-04-2021',
