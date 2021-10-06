@@ -12,10 +12,21 @@ pipeline {
     }
     stages {
         stage('Checkout') {
-        steps {
-            echo '------------>Checkout<------------'
-             checkout scm
-
+            steps {
+                echo '------------>Checkout<------------'
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/master']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    gitTool: 'Default',
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[
+                        credentialsId: 'GitHub_DevOps42',
+                        url:'https://github.com/Leoneider/contra'
+                    ]]
+                ])
+            }
         }
         stage('Install') {
             steps {
