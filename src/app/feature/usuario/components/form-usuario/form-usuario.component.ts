@@ -27,7 +27,7 @@ export class FormUsuarioComponent implements OnInit {
       documento: new FormControl(''),
       fehca_nacimiento: new FormControl(''),
       nombres: new FormControl('', [Validators.required]),
-      apellidos: new FormControl('', [Validators.minLength(5)]),
+      apellidos: new FormControl('', [Validators.required]),
       celular: new FormControl('', [Validators.required]),
       email: new FormControl(''),
       contrasena: new FormControl('', [Validators.required]),

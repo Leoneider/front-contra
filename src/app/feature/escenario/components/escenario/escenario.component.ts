@@ -27,6 +27,5 @@ export class EscenarioComponent implements OnInit {
   seleccionar(e: Escenario) {
     this.selectedEscenario = e;
     this.selectEscenario.emit(this.selectedEscenario);
-    console.log(e.nombre);
   }
 }

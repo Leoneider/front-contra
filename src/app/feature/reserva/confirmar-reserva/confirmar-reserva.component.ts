@@ -53,24 +53,21 @@ export class ConfirmarReservaComponent implements OnInit {
 
   isLoadingConsulta: boolean;
   isUsuarioEncontrado = false;
+  timeWait =  1500;
   consultarDocumento() {
     this.documento.valueChanges
-      .pipe(debounceTime(2000), distinctUntilChanged())
-      .subscribe((res) => {
+      .pipe(debounceTime(this.timeWait), distinctUntilChanged())
+      .subscribe((res:string) => {
         this.isLoadingConsulta = true;
         this.isUsuarioEncontrado = false;
         this.usuario = null;
         this.usuarioService.consultarPorDocumento(res).subscribe(
-          (res) => {
+          (res:Usuario[]) => {
             this.isLoadingConsulta = false;
             if (res[0]) {
               this.usuario = res[0];
               this.isUsuarioEncontrado = true;
             }
-          },
-          (err) => {
-            new Error(err);
-            this.isLoadingConsulta = false;
           }
         );
       });
