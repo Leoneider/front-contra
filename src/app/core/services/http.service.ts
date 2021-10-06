@@ -21,13 +21,13 @@ export class HttpService {
     return this.setHeader('xhr-name', name);
   }
 
-  private setHeader(name: string, value: string) {
+  setHeader(name: string, value: string) {
     const newopts = this.createDefaultOptions();
     newopts.headers = newopts.headers.set(name, value);
     return newopts;
   }
 
-  private createOptions(opts: Options): Options {
+  createOptions(opts: Options): Options {
     const defaultOpts: Options = this.createDefaultOptions();
 
     if (opts) {
