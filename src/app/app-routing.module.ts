@@ -29,7 +29,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'usuarios',
+        path: 'usuario',
         loadChildren: () =>
           import('./feature/usuario/usuarios.module').then(
             (m) => m.UsuariosModule

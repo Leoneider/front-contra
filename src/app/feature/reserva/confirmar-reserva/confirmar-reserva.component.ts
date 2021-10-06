@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NotificationService } from '@core/services/notification.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Escenario } from '../../escenario/shared/model/escenario';
@@ -27,6 +28,7 @@ export class ConfirmarReservaComponent implements OnInit {
   documento = new FormControl('', [Validators.required]);
 
   constructor(
+    private router: Router,
     private reservaService: ReservaService,
     private usuarioService: UsuarioService,
     private notificationService: NotificationService
@@ -99,6 +101,8 @@ export class ConfirmarReservaComponent implements OnInit {
         this.notificationService.showSucces(
           'Se ha realizado la reserva, te esperamos en el juego'
         );
+
+        this.router.navigateByUrl('/usuario/perfil');
       }
     });
   }
