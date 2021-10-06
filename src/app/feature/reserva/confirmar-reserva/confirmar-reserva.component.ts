@@ -81,32 +81,34 @@ export class ConfirmarReservaComponent implements OnInit {
       this.guardarReserva();
     }
 
-    if(await this.guardarUsuario()){
+    if (await this.guardarUsuario()) {
       this.guardarReserva();
     }
   }
 
   guardarReserva() {
-    console.log(this.reservaService.escenarioSeleccionado.id, this.reservaService.horaSelecionada.horaInicial, this.reservaService.escenarioSeleccionado.valor);
-    
-    let reserva:Reserva = {
+    console.log(
+      this.reservaService.escenarioSeleccionado.id,
+      this.reservaService.horaSelecionada.horaInicial,
+      this.reservaService.escenarioSeleccionado.valor
+    );
+
+    let reserva: Reserva = {
       id: 0,
-      fecha:"10-04-2021",
+      fecha: "10-04-2021",
       hora: this.reservaService.horaSelecionada.horaInicial,
       estado: "RESERVADO",
       valor: this.reservaService.escenarioSeleccionado.valor,
-      escenario_id: this.reservaService.escenarioSeleccionado.id
-
-      
+      escenario_id: this.reservaService.escenarioSeleccionado.id,
     };
 
-    this.reservaService.guardar(reserva).subscribe(res=>{
-      if(res){
-        this.notificationService.showSucces("Se ha realizado la reserva, te esperamos en el juego")
+    this.reservaService.guardar(reserva).subscribe((res) => {
+      if (res) {
+        this.notificationService.showSucces(
+          "Se ha realizado la reserva, te esperamos en el juego"
+        );
       }
     });
-   
-    
   }
 
   async guardarUsuario() {
@@ -117,12 +119,9 @@ export class ConfirmarReservaComponent implements OnInit {
 
     return new Promise<boolean>((resolve) => {
       this.usuarioService.guardar(data).subscribe((res) => {
-        resolve (res);
+        resolve(res);
       });
-      
-    })
-
-  
+    });
   }
 
   get habilitarBoton() {

@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
-import { HttpService } from '@core/services/http.service';
-import { environment } from 'src/environments/environment';
-import { Usuario } from '../model/usuario';
+import { Injectable } from "@angular/core";
+import { HttpService } from "@core/services/http.service";
+import { environment } from "src/environments/environment";
+import { Usuario } from "../model/usuario";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class UsuarioService {
-
   constructor(protected http: HttpService) {}
 
   public consultar() {
@@ -17,8 +16,7 @@ export class UsuarioService {
     );
   }
 
-  
-  public consultarPorDocumento(documento:string) {
+  public consultarPorDocumento(documento: string) {
     return this.http.doGet<Usuario[]>(
       `${environment.endpoint}/usuarios?documento=${documento}`,
       this.http.optsName("consultar usuarios")

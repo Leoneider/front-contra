@@ -12,12 +12,12 @@ export class EscenarioComponent implements OnInit {
 
   selectedEscenario: Escenario = {
     id: 0,
-    nombre: "",
-    direccion: "",
+    nombre: '',
+    direccion: '',
     valor: 0,
     horaInicial: 0,
-    horaFinal:0,
-    imagen: "",
+    horaFinal: 0,
+    imagen: '',
   };
 
   constructor() {}
@@ -29,6 +29,4 @@ export class EscenarioComponent implements OnInit {
     this.selectEscenario.emit(this.selectedEscenario);
     console.log(e.nombre);
   }
-
-
 }
