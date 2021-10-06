@@ -1,14 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { NotificationService } from "@core/services/notification.service";
-import { Escenario } from "../escenario/shared/model/escenario";
-import { EscenarioService } from "../escenario/shared/service/escenario.service";
-import { ReservaService } from "../reserva/shared/services/reserva.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NotificationService } from '@core/services/notification.service';
+import { Escenario } from '../escenario/shared/model/escenario';
+import { EscenarioService } from '../escenario/shared/service/escenario.service';
+import { ReservaService } from '../reserva/shared/services/reserva.service';
 
 @Component({
-  selector: "app-home",
-  templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.scss"],
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   escenarios: Escenario[] = [];
@@ -38,9 +38,9 @@ export class HomeComponent implements OnInit {
   apartarEscenario() {
     if (this.escenarioSeleccionado) {
       this.reservaService.escenarioSeleccionado = this.escenarioSeleccionado;
-      this.router.navigateByUrl("/reservar");
+      this.router.navigateByUrl('/reservar');
     } else {
-      this.notificationService.showError("Debe seleccionar una escenario");
+      this.notificationService.showError('Debe seleccionar una escenario');
     }
   }
 

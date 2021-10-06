@@ -1,15 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { NotificationService } from "@core/services/notification.service";
-import { Escenario } from "../../escenario/shared/model/escenario";
-import { HoraDisponible } from "../shared/model/hora-disponibles";
-import { Reserva } from "../shared/model/reserva";
-import { ReservaService } from "../shared/services/reserva.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NotificationService } from '@core/services/notification.service';
+import { Escenario } from '../../escenario/shared/model/escenario';
+import { HoraDisponible } from '../shared/model/hora-disponibles';
+import { Reserva } from '../shared/model/reserva';
+import { ReservaService } from '../shared/services/reserva.service';
 
 @Component({
-  selector: "app-apartar",
-  templateUrl: "./apartar.component.html",
-  styleUrls: ["./apartar.component.scss"],
+  selector: 'app-apartar',
+  templateUrl: './apartar.component.html',
+  styleUrls: ['./apartar.component.scss'],
 })
 export class ApartarComponent implements OnInit {
   escenario: Escenario;
@@ -64,7 +64,7 @@ export class ApartarComponent implements OnInit {
   consultarReservas() {
     return new Promise<Reserva[]>((resolve) => {
       this.reservaService
-        .consultarPorFechaAndIdEscenario("10-04-2021", this.escenario.id)
+        .consultarPorFechaAndIdEscenario('10-04-2021', this.escenario.id)
         .subscribe((res) => {
           this.reservasDelEscenario = res;
           resolve(this.reservasDelEscenario);
@@ -75,9 +75,9 @@ export class ApartarComponent implements OnInit {
   confirmarHora() {
     if (this.horaSeleccionada) {
       this.reservaService.horaSelecionada = this.horaSeleccionada;
-      this.router.navigateByUrl("/reservar/confirmar");
+      this.router.navigateByUrl('/reservar/confirmar');
     } else {
-      this.notificationService.showError("Debe seleccionar una escenario");
+      this.notificationService.showError('Debe seleccionar una escenario');
     }
   }
 

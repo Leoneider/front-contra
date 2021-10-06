@@ -1,58 +1,58 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 // import { SecurityGuard } from '@core/guard/security.guard';
-import { AdminLayoutComponent } from "./layout/admin-layout/admin-layout.component";
-import { AuthLayoutComponent } from "./layout/auth-layout/auth-layout.component";
+import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
+import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 
 const routes: Routes = [
-  { path: "", redirectTo: "/home", pathMatch: "full" },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   {
-    path: "",
+    path: '',
     component: AdminLayoutComponent,
     children: [
       {
-        path: "home",
+        path: 'home',
         loadChildren: () =>
-          import("@home/home.module").then((mod) => mod.HomeModule),
+          import('@home/home.module').then((mod) => mod.HomeModule),
       },
       {
-        path: "escenario",
+        path: 'escenario',
         loadChildren: () =>
-          import("./feature/escenario/escenario.module").then(
+          import('./feature/escenario/escenario.module').then(
             (m) => m.EscenarioModule
           ),
       },
       {
-        path: "reservar",
+        path: 'reservar',
         loadChildren: () =>
-          import("./feature/reserva/apartar.module").then(
+          import('./feature/reserva/apartar.module').then(
             (m) => m.ApartarModule
           ),
       },
       {
-        path: "usuarios",
+        path: 'usuarios',
         loadChildren: () =>
-          import("./feature/usuario/usuarios.module").then(
+          import('./feature/usuario/usuarios.module').then(
             (m) => m.UsuariosModule
           ),
       },
     ],
   },
   {
-    path: "",
+    path: '',
     component: AuthLayoutComponent,
     children: [
       {
-        path: "producto",
+        path: 'producto',
         loadChildren: () =>
-          import("@producto/producto.module").then((mod) => mod.ProductoModule),
+          import('@producto/producto.module').then((mod) => mod.ProductoModule),
       },
     ],
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: "legacy" })],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

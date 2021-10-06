@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Escenario } from "../../shared/model/escenario";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Escenario } from '../../shared/model/escenario';
 
 @Component({
-  selector: "app-escenario",
-  templateUrl: "./escenario.component.html",
-  styleUrls: ["./escenario.component.scss"],
+  selector: 'app-escenario',
+  templateUrl: './escenario.component.html',
+  styleUrls: ['./escenario.component.scss'],
 })
 export class EscenarioComponent implements OnInit {
   @Input() escenarios: Escenario[];

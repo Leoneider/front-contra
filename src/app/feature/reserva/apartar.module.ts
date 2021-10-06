@@ -7,17 +7,8 @@ import { SharedModule } from '@shared/shared.module';
 import { ConfirmarReservaComponent } from './confirmar-reserva/confirmar-reserva.component';
 import { UsuariosModule } from '../usuario/usuarios.module';
 
-
 @NgModule({
-  declarations: [
-    ApartarComponent,
-    ConfirmarReservaComponent
-  ],
-  imports: [
-    CommonModule,
-    ApartarRoutingModule,
-    SharedModule,
-    UsuariosModule
-  ]
+  declarations: [ApartarComponent, ConfirmarReservaComponent],
+  imports: [CommonModule, ApartarRoutingModule, SharedModule, UsuariosModule],
 })
-export class ApartarModule { }
+export class ApartarModule {}

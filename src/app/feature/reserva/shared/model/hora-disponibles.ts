@@ -1,5 +1,4 @@
-
 export interface HoraDisponible {
-    horaInicial:  number;
-    isDisponible: boolean;
+  horaInicial: number;
+  isDisponible: boolean;
 }
