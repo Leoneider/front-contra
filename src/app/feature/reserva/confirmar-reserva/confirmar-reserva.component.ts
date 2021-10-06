@@ -64,7 +64,7 @@ export class ConfirmarReservaComponent implements OnInit {
         this.usuario = null;
         this.usuarioService
           .consultarPorDocumento(res)
-          .subscribe((res: Usuario[]) => {
+          .subscribe((res) => {
             this.isLoadingConsulta = false;
             if (res[0]) {
               this.usuario = res[0];
