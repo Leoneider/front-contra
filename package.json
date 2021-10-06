@@ -5,9 +5,10 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json -o",
     "build": "ng build --prod",
-    "test": "ng test --watch=false --browsers=ChromeHeadless --code-coverage",
+    "test": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "sonar": "sonar-scanner"
   },
   "private": true,
   "dependencies": {
