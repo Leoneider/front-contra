@@ -64,10 +64,10 @@ export class ConfirmarReservaComponent implements OnInit {
         this.usuario = null;
         this.usuarioService
           .consultarPorDocumento(res)
-          .subscribe((res) => {
+          .subscribe((user) => {
             this.isLoadingConsulta = false;
             if (res[0]) {
-              this.usuario = res[0];
+              this.usuario = user[0];
               this.isUsuarioEncontrado = true;
             }
           });
