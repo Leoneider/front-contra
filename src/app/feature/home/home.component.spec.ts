@@ -14,7 +14,7 @@ import { HomeComponent } from './home.component';
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  // let notificationService: NotificationService
+  let notificationService: NotificationService
   beforeEach(async () => {
     TestBed.configureTestingModule({
       imports: [
@@ -32,6 +32,7 @@ describe('HomeComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
+    notificationService = TestBed.inject(NotificationService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -61,13 +62,11 @@ describe('HomeComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('Apartar escenario sin seleccionar escenario', () => {
-    const notificationService = jasmine.createSpyObj('NotificationService', ['showError']);
-    const BOTON: HTMLButtonElement = document.querySelector('#btn_select');
+  it('Apartar escenario sin seleccionar escenario', () => {  
+    const spyNotification = spyOn(notificationService, 'showError').and.callThrough();
+    component.escenarioSeleccionado = null;
     fixture.detectChanges();
-    BOTON.click();
-    expect(notificationService).toHaveBeenCalled;
+    component.apartarEscenario();
+    expect(spyNotification.calls.any()).toBeTrue();
   });
-
-
 });
