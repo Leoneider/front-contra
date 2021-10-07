@@ -1,19 +1,21 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormControl, Validators } from "@angular/forms";
-import { NotificationService } from "@core/services/notification.service";
-import { debounceTime, distinctUntilChanged } from "rxjs/operators";
-import { Escenario } from "../../escenario/shared/model/escenario";
-import { FormUsuarioComponent } from "../../usuario/components/form-usuario/form-usuario.component";
-import { Usuario } from "../../usuario/shared/model/usuario";
-import { UsuarioService } from "../../usuario/shared/service/usuario.service";
-import { HoraDisponible } from "../shared/model/hora-disponibles";
-import { Reserva } from "../shared/model/reserva";
-import { ReservaService } from "../shared/services/reserva.service";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NotificationService } from '@core/services/notification.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Escenario } from '../../escenario/shared/model/escenario';
+import { FormUsuarioComponent } from '../../usuario/components/form-usuario/form-usuario.component';
+import { Usuario } from '../../usuario/shared/model/usuario';
+import { UsuarioService } from '../../usuario/shared/service/usuario.service';
+import { HoraDisponible } from '../shared/model/hora-disponibles';
+import { Reserva } from '../shared/model/reserva';
+import { ReservaService } from '../shared/services/reserva.service';
+const timeWait = 1500;
 
 @Component({
-  selector: "app-confirmar-reserva",
-  templateUrl: "./confirmar-reserva.component.html",
-  styleUrls: ["./confirmar-reserva.component.scss"],
+  selector: 'app-confirmar-reserva',
+  templateUrl: './confirmar-reserva.component.html',
+  styleUrls: ['./confirmar-reserva.component.scss'],
 })
 export class ConfirmarReservaComponent implements OnInit {
   @ViewChild(FormUsuarioComponent) usuarioForm: FormUsuarioComponent;
@@ -21,23 +23,25 @@ export class ConfirmarReservaComponent implements OnInit {
   escenarioSeleccionado: Escenario;
   horaSelecionada: HoraDisponible;
   usuario: Usuario;
+  
 
-  documento = new FormControl("", [Validators.required]);
+  documento = new FormControl('', [Validators.required]);
 
   constructor(
+    private router: Router,
     private reservaService: ReservaService,
     private usuarioService: UsuarioService,
     private notificationService: NotificationService
   ) {
     this.usuario = {
       id: 0,
-      documento: "",
-      nombres: "",
-      apellidos: "",
-      celular: "",
-      email: "",
-      fehca_nacimiento: "",
-      contrasena: "",
+      documento: '',
+      nombres: '',
+      apellidos: '',
+      celular: '',
+      email: '',
+      fehca_nacimiento: '',
+      contrasena: '',
     };
   }
 
@@ -55,24 +59,20 @@ export class ConfirmarReservaComponent implements OnInit {
   isUsuarioEncontrado = false;
   consultarDocumento() {
     this.documento.valueChanges
-      .pipe(debounceTime(2000), distinctUntilChanged())
-      .subscribe((res) => {
+      .pipe(debounceTime(timeWait), distinctUntilChanged())
+      .subscribe((res: string) => {
         this.isLoadingConsulta = true;
         this.isUsuarioEncontrado = false;
         this.usuario = null;
-        this.usuarioService.consultarPorDocumento(res).subscribe(
-          (res) => {
+        this.usuarioService
+          .consultarPorDocumento(res)
+          .subscribe((user) => {
             this.isLoadingConsulta = false;
             if (res[0]) {
-              this.usuario = res[0];
+              this.usuario = user[0];
               this.isUsuarioEncontrado = true;
             }
-          },
-          (err) => {
-            new Error(err);
-            this.isLoadingConsulta = false;
-          }
-        );
+          });
       });
   }
 
@@ -81,32 +81,30 @@ export class ConfirmarReservaComponent implements OnInit {
       this.guardarReserva();
     }
 
-    if(await this.guardarUsuario()){
+    if (await this.guardarUsuario()) {
       this.guardarReserva();
     }
   }
 
   guardarReserva() {
-    console.log(this.reservaService.escenarioSeleccionado.id, this.reservaService.horaSelecionada.horaInicial, this.reservaService.escenarioSeleccionado.valor);
-    
-    let reserva:Reserva = {
+    let reserva: Reserva = {
       id: 0,
-      fecha:"10-04-2021",
+      fecha: '10-04-2021',
       hora: this.reservaService.horaSelecionada.horaInicial,
-      estado: "RESERVADO",
+      estado: 'RESERVADO',
       valor: this.reservaService.escenarioSeleccionado.valor,
-      escenario_id: this.reservaService.escenarioSeleccionado.id
-
-      
+      escenario_id: this.reservaService.escenarioSeleccionado.id,
     };
 
-    this.reservaService.guardar(reserva).subscribe(res=>{
-      if(res){
-        this.notificationService.showSucces("Se ha realizado la reserva, te esperamos en el juego")
+    this.reservaService.guardar(reserva).subscribe((res) => {
+      if (res) {
+        this.notificationService.showSucces(
+          'Se ha realizado la reserva, te esperamos en el juego'
+        );
+
+        this.router.navigateByUrl('/usuario/perfil');
       }
     });
-   
-    
   }
 
   async guardarUsuario() {
@@ -117,12 +115,9 @@ export class ConfirmarReservaComponent implements OnInit {
 
     return new Promise<boolean>((resolve) => {
       this.usuarioService.guardar(data).subscribe((res) => {
-        resolve (res);
+        resolve(res);
       });
-      
-    })
-
-  
+    });
   }
 
   get habilitarBoton() {

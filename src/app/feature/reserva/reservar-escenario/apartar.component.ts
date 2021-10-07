@@ -1,15 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { NotificationService } from "@core/services/notification.service";
-import { Escenario } from "../../escenario/shared/model/escenario";
-import { HoraDisponible } from "../shared/model/hora-disponibles";
-import { Reserva } from "../shared/model/reserva";
-import { ReservaService } from "../shared/services/reserva.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NotificationService } from '@core/services/notification.service';
+import { Escenario } from '../../escenario/shared/model/escenario';
+import { HoraDisponible } from '../shared/model/hora-disponibles';
+import { Reserva } from '../shared/model/reserva';
+import { ReservaService } from '../shared/services/reserva.service';
 
 @Component({
-  selector: "app-apartar",
-  templateUrl: "./apartar.component.html",
-  styleUrls: ["./apartar.component.scss"],
+  selector: 'app-apartar',
+  templateUrl: './apartar.component.html',
+  styleUrls: ['./apartar.component.scss'],
 })
 export class ApartarComponent implements OnInit {
   escenario: Escenario;
@@ -40,7 +40,9 @@ export class ApartarComponent implements OnInit {
   async calcularHorarioDisponible(horaInicial: number, horaFinal: number) {
     await this.consultarReservas();
     for (let hora = horaInicial; hora <= horaFinal; hora++) {
-      let isReservada = this.reservasDelEscenario.map( res => res.hora).includes(hora);
+      let isReservada = this.reservasDelEscenario
+        .map((res) => res.hora)
+        .includes(hora);
 
       let horaDisponible: HoraDisponible = {
         horaInicial: 0,
@@ -54,28 +56,28 @@ export class ApartarComponent implements OnInit {
   }
 
   seleccionarHora(hora: HoraDisponible) {
-    if(hora.isDisponible){
-      this.horaSeleccionada = hora
+    if (hora.isDisponible) {
+      this.horaSeleccionada = hora;
     }
   }
 
   consultarReservas() {
     return new Promise<Reserva[]>((resolve) => {
       this.reservaService
-      .consultarPorFechaAndIdEscenario("10-04-2021", this.escenario.id)
-      .subscribe((res) => {
-        this.reservasDelEscenario = res;
-        resolve (this.reservasDelEscenario);
-      });
-    })
+        .consultarPorFechaAndIdEscenario('10-04-2021', this.escenario.id)
+        .subscribe((res) => {
+          this.reservasDelEscenario = res;
+          resolve(this.reservasDelEscenario);
+        });
+    });
   }
 
-  confirmarHora(){
-    if(this.horaSeleccionada){
+  confirmarHora() {
+    if (this.horaSeleccionada) {
       this.reservaService.horaSelecionada = this.horaSeleccionada;
       this.router.navigateByUrl('/reservar/confirmar');
-    }else{
-      this.notificationService.showError('Debe seleccionar una escenario')
+    } else {
+      this.notificationService.showError('Debe seleccionar una escenario');
     }
   }
 

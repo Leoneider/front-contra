@@ -5,12 +5,14 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { FormUsuarioComponent } from './components/form-usuario/form-usuario.component';
 import { SharedModule } from '@shared/shared.module';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 
 @NgModule({
   declarations: [
     UsuariosComponent,
-    FormUsuarioComponent
+    FormUsuarioComponent,
+    PerfilComponent
   ],
   imports: [
     CommonModule,

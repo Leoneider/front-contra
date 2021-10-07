@@ -4,24 +4,22 @@ import { environment } from 'src/environments/environment';
 import { Usuario } from '../model/usuario';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsuarioService {
-
   constructor(protected http: HttpService) {}
 
   public consultar() {
     return this.http.doGet<Usuario[]>(
       `${environment.endpoint}/usuarios`,
-      this.http.optsName("consultar usuarios")
+      this.http.optsName('consultar usuarios')
     );
   }
 
-  
-  public consultarPorDocumento(documento:string) {
+  public consultarPorDocumento(documento: string) {
     return this.http.doGet<Usuario[]>(
       `${environment.endpoint}/usuarios?documento=${documento}`,
-      this.http.optsName("consultar usuarios")
+      this.http.optsName('consultar usuarios')
     );
   }
 
@@ -29,14 +27,14 @@ export class UsuarioService {
     return this.http.doPost<Usuario, boolean>(
       `${environment.endpoint}/usuarios`,
       usuario,
-      this.http.optsName("crear/actualizar usuarios")
+      this.http.optsName('crear/actualizar usuarios')
     );
   }
 
   public eliminar(usuario: Usuario) {
     return this.http.doDelete<boolean>(
       `${environment.endpoint}/usuarios/${usuario.id}`,
-      this.http.optsName("eliminar usuarios")
+      this.http.optsName('eliminar usuarios')
     );
   }
 }

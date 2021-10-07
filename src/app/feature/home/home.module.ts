@@ -6,16 +6,8 @@ import { HomeComponent } from './home.component';
 import { SharedModule } from '@shared/shared.module';
 import { EscenarioModule } from '../escenario/escenario.module';
 
-
 @NgModule({
-  declarations: [
-    HomeComponent
-  ],
-  imports: [
-    CommonModule,
-    HomeRoutingModule,
-    SharedModule,
-    EscenarioModule
-  ]
+  declarations: [HomeComponent],
+  imports: [CommonModule, HomeRoutingModule, SharedModule, EscenarioModule],
 })
-export class HomeModule { }
+export class HomeModule {}

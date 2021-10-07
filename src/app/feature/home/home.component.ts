@@ -8,48 +8,46 @@ import { ReservaService } from '../reserva/shared/services/reserva.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  
-  escenarios:Escenario[] = [];
-  escenarioSeleccionado:Escenario;
+  escenarios: Escenario[] = [];
+  escenarioSeleccionado: Escenario;
 
-  constructor(private readonly router: Router,
-     private escenarioService: EscenarioService,
-     private reservaService: ReservaService,
-     private notificationService: NotificationService) { 
-
-  }
+  constructor(
+    private readonly router: Router,
+    private escenarioService: EscenarioService,
+    private reservaService: ReservaService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit() {
     this.obtenerEscenarios();
   }
 
-
-  obtenerEscenarios(){
-    this.escenarioService.consultar().subscribe( res => {
+  obtenerEscenarios() {
+    this.escenarioService.consultar().subscribe((res) => {
       this.escenarios = res;
-    })
+    });
   }
 
-  sellecionarEscenario(escenario: Escenario){
-    this.escenarioSeleccionado = escenario
+  sellecionarEscenario(escenario: Escenario) {
+    this.escenarioSeleccionado = escenario;
   }
 
-  apartarEscenario(){
-    if(this.escenarioSeleccionado){
+  apartarEscenario() {
+    if (this.escenarioSeleccionado) {
       this.reservaService.escenarioSeleccionado = this.escenarioSeleccionado;
-      this.router.navigateByUrl('/reservar');
-    }else{
-      this.notificationService.showError('Debe seleccionar una escenario')
+      this.redirectReserva();
+    } else {
+      this.notificationService.showError('Debe seleccionar una escenario');
     }
   }
 
- 
-
-  get isSeleccionado(){
-    return this.escenarioSeleccionado ? false : true;
+  redirectReserva(): void {
+    this.router.navigateByUrl('reservar');
   }
 
+  get isSeleccionado() {
+    return this.escenarioSeleccionado ? false : true;
+  }
 }

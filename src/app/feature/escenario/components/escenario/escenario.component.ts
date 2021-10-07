@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Escenario } from "../../shared/model/escenario";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Escenario } from '../../shared/model/escenario';
 
 @Component({
-  selector: "app-escenario",
-  templateUrl: "./escenario.component.html",
-  styleUrls: ["./escenario.component.scss"],
+  selector: 'app-escenario',
+  templateUrl: './escenario.component.html',
+  styleUrls: ['./escenario.component.scss'],
 })
 export class EscenarioComponent implements OnInit {
   @Input() escenarios: Escenario[];
@@ -12,12 +12,12 @@ export class EscenarioComponent implements OnInit {
 
   selectedEscenario: Escenario = {
     id: 0,
-    nombre: "",
-    direccion: "",
+    nombre: '',
+    direccion: '',
     valor: 0,
     horaInicial: 0,
-    horaFinal:0,
-    imagen: "",
+    horaFinal: 0,
+    imagen: '',
   };
 
   constructor() {}
@@ -27,8 +27,5 @@ export class EscenarioComponent implements OnInit {
   seleccionar(e: Escenario) {
     this.selectedEscenario = e;
     this.selectEscenario.emit(this.selectedEscenario);
-    console.log(e.nombre);
   }
-
-
 }
