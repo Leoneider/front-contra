@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpService } from '@core/services/http.service';
 import { NotificationService } from '@core/services/notification.service';
 import { NotifierModule } from 'angular-notifier';
+// import { Usuario } from '../../usuario/shared/model/usuario';
 import { UsuarioService } from '../../usuario/shared/service/usuario.service';
 import { ReservaService } from '../shared/services/reserva.service';
 import { ConfirmarReservaComponent } from './confirmar-reserva.component';
@@ -42,6 +43,7 @@ describe('ConfirmarReservaComponent', () => {
   let component: ConfirmarReservaComponent;
   let fixture: ComponentFixture<ConfirmarReservaComponent>;
   let reservaService: ReservaService;
+  // let usuarioService: UsuarioService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -79,4 +81,39 @@ describe('ConfirmarReservaComponent', () => {
     );
     expect(component.horaSelecionada).toEqual(reservaService.horaSelecionada);
   });
+
+  it('confirmar reserva', () => {
+    const spy = spyOn(component, 'guardarReserva').and.callThrough();
+    component.isUsuarioEncontrado = true;
+    fixture.detectChanges();
+    component.confirmar()
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('confirmar reserva sin usuario registrado', () => {
+    const spy = spyOn(component, 'guardarUsuario').and.callThrough();
+    component.isUsuarioEncontrado = false;
+    fixture.detectChanges();
+    component.confirmar()
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('El boton inicia deshabilitado', () => {
+    const BOTON: HTMLButtonElement = document.querySelector('#btn_confirmar');
+    expect(BOTON.disabled).toBeTrue;
+  });
+
+  it('Habilita el boton confirmar', () => {
+    const BOTON: HTMLButtonElement = document.querySelector('#btn_confirmar');
+    component.isUsuarioEncontrado = true;
+    fixture.detectChanges();
+    expect(BOTON.disabled).toBeFalse;
+  });
+
+  
+
+
+
+
+
 });

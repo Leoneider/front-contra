@@ -22,4 +22,42 @@ describe('FormUsuarioComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('se contruye formulario en el ngOnInit', () => {
+    const spy = spyOn(component, 'buildFormUsusario').and.callThrough();
+    component.ngOnInit();
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalled;
+  });
+
+  it('El formulario es valido', () => {
+    const form = component.usuarioForm;
+    form.get('nombres').setValue('leoneider');
+    form.get('apellidos').setValue('trigos');
+    form.get('celular').setValue('3174638521');
+    form.get('contrasena').setValue('123456');
+    fixture.detectChanges();
+    expect(form.valid).toBeTruthy();
+  });
+
+  it('El formulario es invalido', () => {
+    const form = component.usuarioForm;
+    form.get('contrasena').setValue('123456');
+    fixture.detectChanges();
+    expect(form.invalid).toBeTruthy();
+  });
+
+  it('Retorna el valor del formulario', () => {
+    const form = component.usuarioForm;
+    form.get('nombres').setValue('leoneider');
+    form.get('apellidos').setValue('trigos');
+    form.get('celular').setValue('3174638521');
+    form.get('contrasena').setValue('123456');
+    fixture.detectChanges();
+    let userData = component.getDataUsuarioForm();
+    expect(userData.nombres).toEqual('leoneider');
+  });
+
+
+
 });
