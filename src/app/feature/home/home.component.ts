@@ -37,10 +37,14 @@ export class HomeComponent implements OnInit {
   apartarEscenario() {
     if (this.escenarioSeleccionado) {
       this.reservaService.escenarioSeleccionado = this.escenarioSeleccionado;
-      this.router.navigateByUrl('/reservar');
+      this.redirectReserva();
     } else {
       this.notificationService.showError('Debe seleccionar una escenario');
     }
+  }
+
+  redirectReserva(): void {
+    this.router.navigateByUrl('reservar');
   }
 
   get isSeleccionado() {
