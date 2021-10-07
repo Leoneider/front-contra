@@ -45,7 +45,6 @@ describe('HomeComponent', () => {
     const spy = spyOn(component, 'obtenerEscenarios').and.callThrough();
     component.ngOnInit();
     expect(spy).toHaveBeenCalled();
-  
   });
 
   it('El boton inicia deshabilitado', () => {
@@ -69,4 +68,10 @@ describe('HomeComponent', () => {
     component.apartarEscenario();
     expect(spyNotification.calls.any()).toBeTrue();
   });
+
+  it('Seleccionar escenario', () => {
+    component.sellecionarEscenario({id: 1, nombre: "", direccion: "", valor:0, imagen: "", horaInicial:17, horaFinal:20});
+    expect(component.escenarioSeleccionado.id).toEqual(1);
+  });
+
 });
