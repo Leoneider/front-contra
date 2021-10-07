@@ -21,19 +21,19 @@ export class UsuarioMockService {
 
   consultarPorDocumento() {
     return {
-      "id": 1,
-      "documento": "1091661577",
-      "nombres": "leoneider",
-      "apellidos": "trigos guerrero",
-      "celular": "3174638521",
-      "email": "leoneider@hotmail.es",
-      "fehca_nacimiento": "24-06-1989",
-      "contrasena": "123456"
+      id: 1,
+      documento: '1091661577',
+      nombres: 'leoneider',
+      apellidos: 'trigos guerrero',
+      celular: '3174638521',
+      email: 'leoneider@hotmail.es',
+      fehca_nacimiento: '24-06-1989',
+      contrasena: '123456',
     };
   }
 }
 
-export class ReservaMockService{
+export class ReservaMockService {
   escenarioSeleccionado = 1;
   horaSelecionada = 20;
 }
@@ -53,8 +53,8 @@ describe('ConfirmarReservaComponent', () => {
         NotifierModule,
       ],
       providers: [
-        {provide: ReservaService, useClass: ReservaMockService},
-        {provide: UsuarioService, useClass: UsuarioMockService},
+        { provide: ReservaService, useClass: ReservaMockService },
+        { provide: UsuarioService, useClass: UsuarioMockService },
         NotificationService,
         HttpService,
       ],
@@ -70,15 +70,13 @@ describe('ConfirmarReservaComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    component.guardarUsuario();
   });
 
   it('Obtener hora y escenario seleccionado', () => {
     component.ngOnInit();
-    expect(component.escenarioSeleccionado).toEqual(reservaService.escenarioSeleccionado);
+    expect(component.escenarioSeleccionado).toEqual(
+      reservaService.escenarioSeleccionado
+    );
     expect(component.horaSelecionada).toEqual(reservaService.horaSelecionada);
   });
-
-
-
 });

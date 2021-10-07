@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ApartarRoutingModule } from './apartar-routing.module';
@@ -10,5 +10,6 @@ import { UsuariosModule } from '../usuario/usuarios.module';
 @NgModule({
   declarations: [ApartarComponent, ConfirmarReservaComponent],
   imports: [CommonModule, ApartarRoutingModule, SharedModule, UsuariosModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ApartarModule {}
