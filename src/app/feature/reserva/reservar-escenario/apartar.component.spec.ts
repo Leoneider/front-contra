@@ -7,6 +7,7 @@ import { NotifierModule } from 'angular-notifier';
 import { ReservaService } from '../shared/services/reserva.service';
 import * as Rx from 'rxjs';
 import { ApartarComponent } from './apartar.component';
+import { ConfirmarReservaComponent } from '../confirmar-reserva/confirmar-reserva.component';
 
 describe('ApartarComponent', () => {
   let component: ApartarComponent;
@@ -33,8 +34,8 @@ describe('ApartarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, NotifierModule, HttpClientTestingModule],
-      declarations: [ ApartarComponent ],
+      imports: [RouterTestingModule.withRoutes([{path: 'reservar/confirmar', component: ConfirmarReservaComponent}]), NotifierModule, HttpClientTestingModule],
+      declarations: [ ApartarComponent, ConfirmarReservaComponent],
       providers: [{ provide: ReservaService,HttpService, NotificationService, useValue: reservaMockService },]
     })
     .compileComponents();
@@ -73,6 +74,12 @@ describe('ApartarComponent', () => {
     fixture.detectChanges();
     component.confirmarHora()
     expect(spy).toHaveBeenCalled;
+  });
+
+  it('Seleccionar hora', () => {
+    component.seleccionarHora({horaInicial: 20, isDisponible: true});
+    component.confirmarHora()
+    expect(component.horaSeleccionada).toEqual({horaInicial: 20, isDisponible: true});
   });
 
 
