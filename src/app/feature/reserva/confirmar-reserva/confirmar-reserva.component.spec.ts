@@ -8,6 +8,8 @@ import { NotifierModule } from 'angular-notifier';
 import { UsuarioService } from '../../usuario/shared/service/usuario.service';
 import { ReservaService } from '../shared/services/reserva.service';
 import { ConfirmarReservaComponent } from './confirmar-reserva.component';
+import * as Rx from 'rxjs';
+import { PerfilComponent } from '../../usuario/components/perfil/perfil.component';
 
 export class UsuarioMockService {
   guardar() {
@@ -33,31 +35,44 @@ export class UsuarioMockService {
   }
 }
 
-export class ReservaMockService {
-  escenarioSeleccionado = 1;
-  horaSelecionada = 20;
-}
-
 describe('ConfirmarReservaComponent', () => {
   let component: ConfirmarReservaComponent;
   let fixture: ComponentFixture<ConfirmarReservaComponent>;
   let reservaService: ReservaService;
   // let usuarioService: UsuarioService;
+  let notificationService: NotificationService;
+  let reservaMockService: Partial<ReservaService>;
+
+  reservaMockService = {
+    escenarioSeleccionado: {
+      id: 1,
+      valor: 70000,
+      nombre: 'andres',
+      direccion: '',
+      imagen: '',
+      horaInicial: 17,
+      horaFinal:20
+    },
+    horaSelecionada: { horaInicial: 18, isDisponible: true },
+    guardar: () => {
+      return Rx.of(true);
+    },
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ConfirmarReservaComponent],
+      declarations: [ConfirmarReservaComponent, PerfilComponent],
       imports: [
         CommonModule,
         HttpClientModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes(
+          [{path: 'usuario/perfil', component: PerfilComponent}]
+        ),
         NotifierModule,
       ],
       providers: [
-        { provide: ReservaService, useClass: ReservaMockService },
+        { provide: ReservaService,HttpService, NotificationService, useValue: reservaMockService },
         { provide: UsuarioService, useClass: UsuarioMockService },
-        NotificationService,
-        HttpService,
       ],
     }).compileComponents();
   });
@@ -65,6 +80,7 @@ describe('ConfirmarReservaComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfirmarReservaComponent);
     reservaService = TestBed.inject(ReservaService);
+    notificationService = TestBed.inject(NotificationService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -108,4 +124,16 @@ describe('ConfirmarReservaComponent', () => {
     fixture.detectChanges();
     expect(BOTON.disabled).toBeFalse;
   });
+
+  it('Se guarda la reserva correctamente', () => {
+    const spy = spyOn(notificationService, 'showSucces').and.callThrough();
+    const spyRouter = spyOn(component.router, 'navigateByUrl').and.callThrough();
+    component.guardarReserva();
+    expect(spy).toHaveBeenCalled;
+    expect(spyRouter).toHaveBeenCalled;
+  });
+
+  // it('should create', () => {
+  //   expect(component).toBeTruthy();
+  // });
 });

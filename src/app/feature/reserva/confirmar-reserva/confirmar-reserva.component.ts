@@ -28,7 +28,7 @@ export class ConfirmarReservaComponent implements OnInit {
   documento = new FormControl('', [Validators.required]);
 
   constructor(
-    private router: Router,
+    public router: Router,
     private reservaService: ReservaService,
     private usuarioService: UsuarioService,
     private notificationService: NotificationService

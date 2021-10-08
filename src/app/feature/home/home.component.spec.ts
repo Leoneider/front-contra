@@ -8,6 +8,7 @@ import { SharedModule } from '@shared/shared.module';
 import { NotifierModule } from 'angular-notifier';
 import { EscenarioModule } from '../escenario/escenario.module';
 import { EscenarioService } from '../escenario/shared/service/escenario.service';
+import { ApartarComponent } from '../reserva/reservar-escenario/apartar.component';
 
 import { HomeComponent } from './home.component';
 
@@ -19,13 +20,15 @@ describe('HomeComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         CommonModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes(
+          [{path: 'reservar', component: ApartarComponent}]
+        ),
         SharedModule,
         NotifierModule,
         EscenarioModule,
         HttpClientTestingModule,
       ],
-      declarations: [HomeComponent],
+      declarations: [HomeComponent, ApartarComponent],
       providers: [HttpService, EscenarioService, NotificationService],
     }).compileComponents();
   });

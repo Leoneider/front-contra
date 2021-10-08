@@ -16,16 +16,18 @@ export class ApartarComponent implements OnInit {
   horasDisponibles: HoraDisponible[] = [];
   reservasDelEscenario: Reserva[] = [];
 
-  horaSeleccionada: HoraDisponible = {
-    horaInicial: 0,
-    isDisponible: false,
-  };
+  horaSeleccionada: HoraDisponible;
 
   constructor(
     private router: Router,
     private notificationService: NotificationService,
     private reservaService: ReservaService
-  ) {}
+  ) {
+    this.horaSeleccionada = {
+      horaInicial: 0,
+      isDisponible: false,
+    };
+  }
 
   ngOnInit(): void {
     if (this.reservaService.escenarioSeleccionado) {
