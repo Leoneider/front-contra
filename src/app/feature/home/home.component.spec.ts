@@ -12,18 +12,20 @@ import { ApartarComponent } from '../reserva/reservar-escenario/apartar.componen
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { HomeComponent } from './home.component';
+import { of } from 'rxjs';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  let notificationService: NotificationService
+  let notificationService: NotificationService;
+  let escenarioService: EscenarioService;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         CommonModule,
-        RouterTestingModule.withRoutes(
-          [{path: 'reservar', component: ApartarComponent}]
-        ),
+        RouterTestingModule.withRoutes([
+          { path: 'reservar', component: ApartarComponent },
+        ]),
         SharedModule,
         NotifierModule,
         EscenarioModule,
@@ -31,43 +33,75 @@ describe('HomeComponent', () => {
       ],
       declarations: [HomeComponent, ApartarComponent],
       providers: [HttpService, EscenarioService, NotificationService],
-      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   });
 
-  beforeEach(async() => {
+  beforeEach(async () => {
     fixture = TestBed.createComponent(HomeComponent);
     notificationService = TestBed.inject(NotificationService);
+    escenarioService = TestBed.inject(EscenarioService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', async() => {
+  it('should create', async () => {
     expect(component).toBeTruthy();
   });
 
   it('Obtener escenarios', () => {
     const spy = spyOn(component, 'obtenerEscenarios').and.callThrough();
+    const spySer = spyOn(escenarioService, 'consultar').and.returnValue(
+      of([
+        {
+          id: 1,
+          nombre: 'leoneider',
+          direccion: 'milanes',
+          valor: 70000,
+          imagen: 'string',
+          horaInicial: 18,
+          horaFinal: 20,
+        },
+      ])
+    );
     component.ngOnInit();
     expect(spy).toHaveBeenCalled();
+    expect(spySer).toHaveBeenCalled();
   });
 
-  it('El boton inicia deshabilitado', waitForAsync(() => {
-    const BOTON: HTMLButtonElement = document.querySelector('#btn_select');
-    expect(BOTON.disabled).toBeTrue;
-  }));
+  it(
+    'El boton inicia deshabilitado',
+    waitForAsync(() => {
+      const BOTON: HTMLButtonElement = document.querySelector('#btn_select');
+      expect(BOTON.disabled).toBeTrue;
+    })
+  );
 
-  it('Apartar escenario seleccionando escenario', waitForAsync(() => {
-    const spy = spyOn(component, 'redirectReserva').and.callThrough();
-    const BOTON: HTMLButtonElement = document.querySelector('#btn_select');
-    component.escenarioSeleccionado = {id: 1, nombre: "", direccion: "", valor:0, imagen: "", horaInicial:17, horaFinal:20};
-    fixture.detectChanges();
-    BOTON.click();
-    expect(spy).toHaveBeenCalled();
-  }));
+  it(
+    'Apartar escenario seleccionando escenario',
+    waitForAsync(() => {
+      const spy = spyOn(component, 'redirectReserva').and.callThrough();
+      const BOTON: HTMLButtonElement = document.querySelector('#btn_select');
+      component.escenarioSeleccionado = {
+        id: 1,
+        nombre: '',
+        direccion: '',
+        valor: 0,
+        imagen: '',
+        horaInicial: 17,
+        horaFinal: 20,
+      };
+      fixture.detectChanges();
+      BOTON.click();
+      expect(spy).toHaveBeenCalled();
+    })
+  );
 
-  it('Apartar escenario sin seleccionar escenario', () => {  
-    const spyNotification = spyOn(notificationService, 'showError').and.callThrough();
+  it('Apartar escenario sin seleccionar escenario', () => {
+    const spyNotification = spyOn(
+      notificationService,
+      'showError'
+    ).and.callThrough();
     component.escenarioSeleccionado = null;
     fixture.detectChanges();
     component.apartarEscenario();
@@ -75,8 +109,15 @@ describe('HomeComponent', () => {
   });
 
   it('Seleccionar escenario', () => {
-    component.sellecionarEscenario({id: 1, nombre: "", direccion: "", valor:0, imagen: "", horaInicial:17, horaFinal:20});
+    component.sellecionarEscenario({
+      id: 1,
+      nombre: '',
+      direccion: '',
+      valor: 0,
+      imagen: '',
+      horaInicial: 17,
+      horaFinal: 20,
+    });
     expect(component.escenarioSeleccionado.id).toEqual(1);
   });
-
 });
