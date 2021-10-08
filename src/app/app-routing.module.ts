@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
-import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -34,17 +34,6 @@ const routes: Routes = [
           import('./feature/usuario/usuarios.module').then(
             (m) => m.UsuariosModule
           ),
-      },
-    ],
-  },
-  {
-    path: '',
-    component: AuthLayoutComponent,
-    children: [
-      {
-        path: 'producto',
-        loadChildren: () =>
-          import('@producto/producto.module').then((mod) => mod.ProductoModule),
       },
     ],
   },
