@@ -72,6 +72,12 @@ describe('ApartarComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('Ng on init sin seleccionar escenario', () => {
+    component.reservaService.escenarioSeleccionado = null;
+    component.ngOnInit();
+    expect(component.escenario).toBeUndefined;
+  });
+
   it(
     'Calcular horario disponible',
     waitForAsync(() => {
@@ -119,7 +125,7 @@ describe('ApartarComponent', () => {
   });
 
   it('Seleccionar hora no disponible', () => {
-    component.seleccionarHora({ horaInicial: 20, isDisponible: true });
+    component.seleccionarHora({ horaInicial: 20, isDisponible: false });
     component.confirmarHora();
     expect(component.horaSeleccionada).toBeUndefined;
   });

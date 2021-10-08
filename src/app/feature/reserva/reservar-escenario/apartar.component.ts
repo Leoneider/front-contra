@@ -21,7 +21,7 @@ export class ApartarComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private notificationService: NotificationService,
-    private reservaService: ReservaService
+    public reservaService: ReservaService
   ) {
     this.horaSeleccionada = {
       horaInicial: 0,
