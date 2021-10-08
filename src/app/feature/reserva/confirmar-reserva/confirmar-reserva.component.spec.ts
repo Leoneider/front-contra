@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpService } from '@core/services/http.service';
 import { NotificationService } from '@core/services/notification.service';
@@ -14,14 +14,8 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 export class UsuarioMockService {
   guardar() {
-    return {
-      name: 'morpheus',
-      job: 'leader',
-      id: '808',
-      createdAt: '2021-04-14T22:22:44.163Z',
-    };
+    return true;
   }
-
   consultarPorDocumento() {
     return {
       id: 1,
@@ -40,7 +34,7 @@ describe('ConfirmarReservaComponent', () => {
   let component: ConfirmarReservaComponent;
   let fixture: ComponentFixture<ConfirmarReservaComponent>;
   let reservaService: ReservaService;
-  // let usuarioService: UsuarioService;
+  let usuarioService: UsuarioService;
   let notificationService: NotificationService;
   let reservaMockService: Partial<ReservaService>;
 
@@ -81,6 +75,7 @@ describe('ConfirmarReservaComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfirmarReservaComponent);
+    usuarioService = TestBed.inject(UsuarioService);
     reservaService = TestBed.inject(ReservaService);
     notificationService = TestBed.inject(NotificationService);
     component = fixture.componentInstance;
@@ -99,21 +94,25 @@ describe('ConfirmarReservaComponent', () => {
     expect(component.horaSelecionada).toEqual(reservaService.horaSelecionada);
   });
 
-  it('confirmar reserva', () => {
+  it('confirmar reserva', waitForAsync(() => {
     const spy = spyOn(component, 'guardarReserva').and.callThrough();
+    const spyUserService = spyOn(usuarioService, 'guardar').and.returnValue(Rx.of(true));
     component.isUsuarioEncontrado = true;
     fixture.detectChanges();
     component.confirmar();
     expect(spy).toHaveBeenCalled();
-  });
+    expect(spyUserService).toHaveBeenCalled();
+  }));
 
-  // it('confirmar reserva sin usuario registrado', () => {
-  //   const spy = spyOn(component, 'guardarUsuario').and.callThrough();
-  //   component.isUsuarioEncontrado = false;
-  //   fixture.detectChanges();
-  //   component.confirmar();
-  //   expect(spy).toHaveBeenCalled();
-  // });
+  it('confirmar reserva sin usuario registrado', () => {
+    const spy = spyOn(component, 'guardarUsuario').and.callThrough();
+    const spyUserService = spyOn(usuarioService, 'guardar').and.returnValue(Rx.of(true));
+    component.isUsuarioEncontrado = false;
+    fixture.detectChanges();
+    component.confirmar();
+    expect(spy).toHaveBeenCalled();
+    expect(spyUserService).toHaveBeenCalled();
+  });
 
   it('El boton inicia deshabilitado', () => {
     const BOTON: HTMLButtonElement = document.querySelector('#btn_confirmar');

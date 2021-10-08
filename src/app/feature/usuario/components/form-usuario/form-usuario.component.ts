@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from '../../shared/model/usuario';
 
@@ -9,7 +9,7 @@ import { Usuario } from '../../shared/model/usuario';
 })
 export class FormUsuarioComponent implements OnInit {
   @Input() usuario: Usuario;
-  // @Output() usuarioFormEvent = new EventEmitter<FormGroup>(); 
+  @Output() usuarioFormEvent = new EventEmitter<FormGroup>(); 
 
   usuarioForm: FormGroup;
 
@@ -20,7 +20,7 @@ export class FormUsuarioComponent implements OnInit {
     if (this.usuario) {
       this.usuarioForm.patchValue(this.usuario);
     }
-    // this.emitirFormUsuario();
+    this.emitirFormUsuario();
   }
 
   buildFormUsusario() {
@@ -40,12 +40,11 @@ export class FormUsuarioComponent implements OnInit {
     return this.usuarioForm.value;
   }
 
-  // emitirFormUsuario(){
-  //   this.usuarioForm.valueChanges.subscribe( res => {
-  //     console.log("EMITIR FORMULARIO", res);
-      
-  //   })
-  // }
+  emitirFormUsuario(){
+    this.usuarioForm.valueChanges.subscribe( () => {
+      this.usuarioFormEvent.emit(this.usuarioForm)
+    })
+  }
 
 
 }

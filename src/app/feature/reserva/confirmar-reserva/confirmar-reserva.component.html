@@ -48,7 +48,7 @@
           <mat-progress-bar mode="indeterminate" *ngIf="isLoadingConsulta"></mat-progress-bar>
           <mat-divider></mat-divider>
 
-          <app-form-usuario [usuario]="usuario" *ngIf="!isUsuarioEncontrado"></app-form-usuario>
+          <app-form-usuario [usuario]="usuario" *ngIf="!isUsuarioEncontrado" (usuarioFormEvent)="getFormUsuario($event)"></app-form-usuario>
           
 
           <div class="flex justify-content-end">

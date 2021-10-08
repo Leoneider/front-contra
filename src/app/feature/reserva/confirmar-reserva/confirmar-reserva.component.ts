@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationService } from '@core/services/notification.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Escenario } from '../../escenario/shared/model/escenario';
-import { FormUsuarioComponent } from '../../usuario/components/form-usuario/form-usuario.component';
 import { Usuario } from '../../usuario/shared/model/usuario';
 import { UsuarioService } from '../../usuario/shared/service/usuario.service';
 import { HoraDisponible } from '../shared/model/hora-disponibles';
@@ -18,7 +17,6 @@ const timeWait = 1500;
   styleUrls: ['./confirmar-reserva.component.scss'],
 })
 export class ConfirmarReservaComponent implements OnInit {
-  @ViewChild(FormUsuarioComponent) usuarioForm: FormUsuarioComponent;
 
   escenarioSeleccionado: Escenario;
   horaSelecionada: HoraDisponible;
@@ -81,9 +79,9 @@ export class ConfirmarReservaComponent implements OnInit {
       this.guardarReserva();
     }
 
-    // if (await this.guardarUsuario()) {
-    //   this.guardarReserva();
-    // }
+    if (await this.guardarUsuario()) {
+      this.guardarReserva();
+    }
   }
 
   guardarReserva() {
@@ -109,7 +107,7 @@ export class ConfirmarReservaComponent implements OnInit {
 
   async guardarUsuario() {
     let data = {
-      ...this.usuarioForm.usuarioForm.value,
+      ...this.userForm.value,
       documento: this.documento.value,
     };
 
@@ -120,13 +118,15 @@ export class ConfirmarReservaComponent implements OnInit {
     });
   }
 
+  userForm:FormGroup = new FormGroup({nombres: new FormControl('', [Validators.required])});
+  getFormUsuario(userForm:FormGroup){
+    this.userForm = userForm
+  }
+
   get habilitarBoton() {
     if (this.isUsuarioEncontrado) {
       return false;
     }
-    if (this.usuarioForm) {
-      return this.usuarioForm.usuarioForm.invalid;
-    }
-    return true;
+    return this.userForm.invalid;
   }
 }
