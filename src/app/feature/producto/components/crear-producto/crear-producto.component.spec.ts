@@ -8,6 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ProductoService } from '../../shared/service/producto.service';
 import { HttpService } from 'src/app/core/services/http.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('CrearProductoComponent', () => {
   let component: CrearProductoComponent;
@@ -25,6 +26,7 @@ describe('CrearProductoComponent', () => {
         FormsModule
       ],
       providers: [ProductoService, HttpService],
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));

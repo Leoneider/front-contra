@@ -10,6 +10,7 @@ import { ReservaService } from '../shared/services/reserva.service';
 import { ConfirmarReservaComponent } from './confirmar-reserva.component';
 import * as Rx from 'rxjs';
 import { PerfilComponent } from '../../usuario/components/perfil/perfil.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 export class UsuarioMockService {
   guardar() {
@@ -74,6 +75,7 @@ describe('ConfirmarReservaComponent', () => {
         { provide: ReservaService,HttpService, NotificationService, useValue: reservaMockService },
         { provide: UsuarioService, useClass: UsuarioMockService },
       ],
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   });
 

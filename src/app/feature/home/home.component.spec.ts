@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpService } from '@core/services/http.service';
 import { NotificationService } from '@core/services/notification.service';
@@ -9,6 +9,7 @@ import { NotifierModule } from 'angular-notifier';
 import { EscenarioModule } from '../escenario/escenario.module';
 import { EscenarioService } from '../escenario/shared/service/escenario.service';
 import { ApartarComponent } from '../reserva/reservar-escenario/apartar.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { HomeComponent } from './home.component';
 
@@ -17,7 +18,7 @@ describe('HomeComponent', () => {
   let fixture: ComponentFixture<HomeComponent>;
   let notificationService: NotificationService
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [
         CommonModule,
         RouterTestingModule.withRoutes(
@@ -30,17 +31,18 @@ describe('HomeComponent', () => {
       ],
       declarations: [HomeComponent, ApartarComponent],
       providers: [HttpService, EscenarioService, NotificationService],
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   });
 
-  beforeEach(() => {
+  beforeEach(async() => {
     fixture = TestBed.createComponent(HomeComponent);
     notificationService = TestBed.inject(NotificationService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create', async() => {
     expect(component).toBeTruthy();
   });
 
@@ -50,19 +52,19 @@ describe('HomeComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('El boton inicia deshabilitado', () => {
+  it('El boton inicia deshabilitado', waitForAsync(() => {
     const BOTON: HTMLButtonElement = document.querySelector('#btn_select');
     expect(BOTON.disabled).toBeTrue;
-  });
+  }));
 
-  it('Apartar escenario seleccionando escenario', () => {
+  it('Apartar escenario seleccionando escenario', waitForAsync(() => {
     const spy = spyOn(component, 'redirectReserva').and.callThrough();
     const BOTON: HTMLButtonElement = document.querySelector('#btn_select');
     component.escenarioSeleccionado = {id: 1, nombre: "", direccion: "", valor:0, imagen: "", horaInicial:17, horaFinal:20};
     fixture.detectChanges();
     BOTON.click();
     expect(spy).toHaveBeenCalled();
-  });
+  }));
 
   it('Apartar escenario sin seleccionar escenario', () => {  
     const spyNotification = spyOn(notificationService, 'showError').and.callThrough();

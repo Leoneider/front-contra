@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { first } from 'rxjs/operators';
 import { Escenario } from '../../shared/model/escenario';
@@ -11,6 +12,7 @@ describe('EscenarioComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [EscenarioComponent],
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   });
 
