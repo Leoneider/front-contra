@@ -63,6 +63,7 @@ describe('ApartarComponent', () => {
     const spy = spyOn(component, 'redirectConfirm').and.callThrough();
     component.horaSeleccionada = {horaInicial: 20, isDisponible: true};
     fixture.detectChanges();
+    component.confirmarHora()
     expect(spy).toHaveBeenCalled;
   });
 
@@ -70,6 +71,7 @@ describe('ApartarComponent', () => {
     const spy = spyOn(notificationService, 'showError').and.callThrough();
     component.horaSeleccionada = {horaInicial: 0, isDisponible: true};
     fixture.detectChanges();
+    component.confirmarHora()
     expect(spy).toHaveBeenCalled;
   });
 
