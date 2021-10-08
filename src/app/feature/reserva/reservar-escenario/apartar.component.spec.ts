@@ -20,9 +20,9 @@ describe('ApartarComponent', () => {
     escenarioSeleccionado: {
       id: 1,
       valor: 70000,
-      nombre: 'andres',
-      direccion: '',
-      imagen: '',
+      nombre: 'Maria Luna',
+      direccion: 'xxxx',
+      imagen: 'xxxxxx',
       horaInicial: 17,
       horaFinal: 20,
     },
@@ -50,10 +50,10 @@ describe('ApartarComponent', () => {
       ],
       declarations: [ApartarComponent, ConfirmarReservaComponent],
       providers: [
+        HttpService,
+        NotificationService,
         {
           provide: ReservaService,
-          HttpService,
-          NotificationService,
           useValue: reservaMockService,
         },
       ],
@@ -72,22 +72,30 @@ describe('ApartarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Ng on init sin seleccionar escenario', () => {
-    component.reservaService.escenarioSeleccionado = null;
-    component.ngOnInit();
-    expect(component.escenario).toBeUndefined;
-  });
-
-
   it(
     'Calcular horario disponible cuando escenario tiene reservas',
     waitForAsync(() => {
-      component.ngOnInit();
+
+      component.escenario =  {
+        id: 1,
+        valor: 70000,
+        nombre: 'Maria Luna',
+        direccion: 'xxxx',
+        imagen: 'xxxxxx',
+        horaInicial: 17,
+        horaFinal: 20,
+      }
       fixture.detectChanges();
       component.calcularHorarioDisponible(13, 15);
       expect(component).toBeTruthy();
     })
   );
+
+  it('Ng on init sin seleccionar escenario', () => {
+    component.reservaService.escenarioSeleccionado = null;
+    component.ngOnInit();
+    expect(component.escenario).toBeUndefined;
+  });
 
   it('Confirmar hora seleccionada', () => {
     const spy = spyOn(component, 'redirectConfirm').and.callThrough();
