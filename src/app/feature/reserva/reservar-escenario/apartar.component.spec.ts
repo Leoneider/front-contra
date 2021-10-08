@@ -12,7 +12,7 @@ describe('ApartarComponent', () => {
   let component: ApartarComponent;
   let fixture: ComponentFixture<ApartarComponent>;
   let reservaMockService: Partial<ReservaService>;
-  let reservaService: ReservaService;
+  
 
   reservaMockService = {
     escenarioSeleccionado: {
@@ -41,7 +41,6 @@ describe('ApartarComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ApartarComponent);
-    reservaService = TestBed.inject(ReservaService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
