@@ -81,9 +81,9 @@ export class ConfirmarReservaComponent implements OnInit {
       this.guardarReserva();
     }
 
-    if (await this.guardarUsuario()) {
-      this.guardarReserva();
-    }
+    // if (await this.guardarUsuario()) {
+    //   this.guardarReserva();
+    // }
   }
 
   guardarReserva() {

@@ -19,7 +19,7 @@ export class ApartarComponent implements OnInit {
   horaSeleccionada: HoraDisponible;
 
   constructor(
-    private router: Router,
+    private readonly router: Router,
     private notificationService: NotificationService,
     private reservaService: ReservaService
   ) {
@@ -75,13 +75,19 @@ export class ApartarComponent implements OnInit {
   }
 
   confirmarHora() {
-    if (this.horaSeleccionada) {
+    if (this.horaSeleccionada.horaInicial) {
       this.reservaService.horaSelecionada = this.horaSeleccionada;
-      this.router.navigateByUrl('/reservar/confirmar');
+      this.redirectConfirm();
     } else {
       this.notificationService.showError('Debe seleccionar una escenario');
     }
   }
+
+  redirectConfirm(){
+    this.router.navigateByUrl('/reservar/confirmar');
+  }
+    
+
 
   get isSeleccionado() {
     return this.horaSeleccionada.horaInicial ? false : true;

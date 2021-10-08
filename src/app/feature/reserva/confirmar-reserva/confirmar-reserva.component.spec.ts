@@ -99,13 +99,13 @@ describe('ConfirmarReservaComponent', () => {
     expect(component.horaSelecionada).toEqual(reservaService.horaSelecionada);
   });
 
-  // it('confirmar reserva', () => {
-  //   const spy = spyOn(component, 'guardarReserva').and.callThrough();
-  //   component.isUsuarioEncontrado = true;
-  //   fixture.detectChanges();
-  //   component.confirmar();
-  //   expect(spy).toHaveBeenCalled();
-  // });
+  it('confirmar reserva', () => {
+    const spy = spyOn(component, 'guardarReserva').and.callThrough();
+    component.isUsuarioEncontrado = true;
+    fixture.detectChanges();
+    component.confirmar();
+    expect(spy).toHaveBeenCalled();
+  });
 
   // it('confirmar reserva sin usuario registrado', () => {
   //   const spy = spyOn(component, 'guardarUsuario').and.callThrough();
@@ -135,7 +135,4 @@ describe('ConfirmarReservaComponent', () => {
     expect(spyRouter).toHaveBeenCalled;
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
 });

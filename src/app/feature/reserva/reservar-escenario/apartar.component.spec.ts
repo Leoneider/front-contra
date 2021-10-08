@@ -12,6 +12,7 @@ describe('ApartarComponent', () => {
   let component: ApartarComponent;
   let fixture: ComponentFixture<ApartarComponent>;
   let reservaMockService: Partial<ReservaService>;
+  let notificationService: NotificationService;
   
 
   reservaMockService = {
@@ -41,6 +42,7 @@ describe('ApartarComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ApartarComponent);
+    notificationService = TestBed.inject(NotificationService);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -56,6 +58,22 @@ describe('ApartarComponent', () => {
     component.calcularHorarioDisponible(13, 15);
     expect(component).toBeTruthy();
   }));
+
+  it('Confirmar hora seleccionada', () => {
+    const spy = spyOn(component, 'redirectConfirm').and.callThrough();
+    component.horaSeleccionada = {horaInicial: 20, isDisponible: true};
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalled;
+  });
+
+  it('Confirmar hora seleccionada', () => {
+    const spy = spyOn(notificationService, 'showError').and.callThrough();
+    component.horaSeleccionada = {horaInicial: 0, isDisponible: true};
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalled;
+  });
+
+
 
 
 });
