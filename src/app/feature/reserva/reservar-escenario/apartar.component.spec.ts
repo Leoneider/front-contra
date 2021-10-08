@@ -78,16 +78,6 @@ describe('ApartarComponent', () => {
     expect(component.escenario).toBeUndefined;
   });
 
-  it(
-    'Calcular horario disponible',
-    waitForAsync(() => {
-      component.reservasDelEscenario = [];
-      component.ngOnInit();
-      fixture.detectChanges();
-      component.calcularHorarioDisponible(13, 15);
-      expect(component).toBeTruthy();
-    })
-  );
 
   it(
     'Calcular horario disponible cuando escenario tiene reservas',

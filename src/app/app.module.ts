@@ -8,6 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
+import { HttpClientModule } from '@angular/common/http';
 
 /**
  * Custom angular notifier options
@@ -62,6 +63,7 @@ const customNotifierOptions: NotifierOptions = {
     BrowserAnimationsModule,
     LayoutModule,
     NotifierModule.withConfig(customNotifierOptions),
+    HttpClientModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],
