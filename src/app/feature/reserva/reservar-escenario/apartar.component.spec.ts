@@ -8,6 +8,7 @@ import { ReservaService } from '../shared/services/reserva.service';
 import * as Rx from 'rxjs';
 import { ApartarComponent } from './apartar.component';
 import { ConfirmarReservaComponent } from '../confirmar-reserva/confirmar-reserva.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ApartarComponent', () => {
   let component: ApartarComponent;
@@ -56,6 +57,7 @@ describe('ApartarComponent', () => {
           useValue: reservaMockService,
         },
       ],
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
   });
 
@@ -81,7 +83,7 @@ describe('ApartarComponent', () => {
     })
   );
 
-  fit(
+  it(
     'Calcular horario disponible cuando escenario tiene reservas',
     waitForAsync(() => {
       component.ngOnInit();
@@ -116,7 +118,7 @@ describe('ApartarComponent', () => {
     });
   });
 
-  fit('Seleccionar hora no disponible', () => {
+  it('Seleccionar hora no disponible', () => {
     component.seleccionarHora({ horaInicial: 20, isDisponible: true });
     component.confirmarHora();
     expect(component.horaSeleccionada).toBeUndefined;
