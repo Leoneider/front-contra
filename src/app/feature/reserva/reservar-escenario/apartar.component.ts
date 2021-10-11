@@ -6,6 +6,8 @@ import { HoraDisponible } from '../shared/model/hora-disponibles';
 import { Reserva } from '../shared/model/reserva';
 import { ReservaService } from '../shared/services/reserva.service';
 
+const fechaActual = new Date().toLocaleDateString();  
+
 @Component({
   selector: 'app-apartar',
   templateUrl: './apartar.component.html',
@@ -17,7 +19,7 @@ export class ApartarComponent implements OnInit {
   reservasDelEscenario: Reserva[] = [];
 
   horaSeleccionada: HoraDisponible;
-
+  
   constructor(
     private readonly router: Router,
     private notificationService: NotificationService,
@@ -66,7 +68,7 @@ export class ApartarComponent implements OnInit {
   consultarReservas() {
     return new Promise<Reserva[]>((resolve) => {
       this.reservaService
-        .consultarPorFechaAndIdEscenario('10-04-2021', this.escenario.id)
+        .consultarPorFechaAndIdEscenario(fechaActual, this.escenario.id)
         .subscribe((res) => {
           this.reservasDelEscenario = res;
           resolve(this.reservasDelEscenario);

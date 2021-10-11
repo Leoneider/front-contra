@@ -14,10 +14,13 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 export class UsuarioMockService {
   guardar() {
-    return true;
+    return Rx.of(true);
+  }
+  login() {
+    return Rx.of(true);
   }
   consultarPorDocumento() {
-    return {
+    return Rx.of({
       id: 1,
       documento: '1091661577',
       nombres: 'leoneider',
@@ -26,7 +29,7 @@ export class UsuarioMockService {
       email: 'leoneider@hotmail.es',
       fehca_nacimiento: '24-06-1989',
       contrasena: '123456',
-    };
+    });
   }
 }
 
@@ -51,7 +54,7 @@ describe('ConfirmarReservaComponent', () => {
     horaSelecionada: { horaInicial: 18, isDisponible: true },
     guardar: () => {
       return Rx.of(true);
-    },
+    }
   };
 
   beforeEach(async () => {
@@ -86,22 +89,28 @@ describe('ConfirmarReservaComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Obtener hora y escenario seleccionado', () => {
+  it('Obtener hora y escenario seleccionado', waitForAsync(() => {
     component.ngOnInit();
     expect(component.escenarioSeleccionado).toEqual(
       reservaService.escenarioSeleccionado
     );
     expect(component.horaSelecionada).toEqual(reservaService.horaSelecionada);
-  });
+  }));
 
   it('confirmar reserva', waitForAsync(() => {
-    const spy = spyOn(component, 'guardarReserva').and.callThrough();
-    const spyUserService = spyOn(usuarioService, 'guardar').and.returnValue(Rx.of(true));
+    const spy = spyOn(component, 'guardarReservaUsuarioExistente').and.callThrough();
     component.isUsuarioEncontrado = true;
     fixture.detectChanges();
     component.confirmar();
     expect(spy).toHaveBeenCalled();
-    expect(spyUserService).toHaveBeenCalled();
+  }));
+
+  it('confirmar reserva usuario nuevo', waitForAsync(() => {
+    const spy = spyOn(component, 'guardarReservaUsuarioNuevo').and.callThrough();
+    component.isUsuarioEncontrado = false;
+    fixture.detectChanges();
+    component.confirmar();
+    expect(spy).toHaveBeenCalled();
   }));
 
   it('confirmar reserva sin usuario registrado', () => {

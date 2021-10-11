@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from '@core/services/http.service';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../model/usuario';
 
@@ -35,6 +36,15 @@ export class UsuarioService {
     return this.http.doDelete<boolean>(
       `${environment.endpoint}/usuarios/${usuario.id}`,
       this.http.optsName('eliminar usuarios')
+    );
+  }
+
+  public login(documento: string, password: string) {
+    return this.http.doGet<boolean>(
+      `${environment.endpoint}/usuarios?documento=${documento}&contrasena=${password}`,
+      this.http.optsName('consultar usuarios')
+    ).pipe(
+      map( res => res[0] ? true : false)
     );
   }
 }

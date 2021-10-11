@@ -17,13 +17,12 @@ const timeWait = 1500;
   styleUrls: ['./confirmar-reserva.component.scss'],
 })
 export class ConfirmarReservaComponent implements OnInit {
-
   escenarioSeleccionado: Escenario;
   horaSelecionada: HoraDisponible;
   usuario: Usuario;
-  
 
   documento = new FormControl('', [Validators.required]);
+  password = new FormControl('', [Validators.required]);
 
   constructor(
     public router: Router,
@@ -62,32 +61,54 @@ export class ConfirmarReservaComponent implements OnInit {
         this.isLoadingConsulta = true;
         this.isUsuarioEncontrado = false;
         this.usuario = null;
-        this.usuarioService
-          .consultarPorDocumento(res)
-          .subscribe((user) => {
-            this.isLoadingConsulta = false;
-            if (res[0]) {
-              this.usuario = user[0];
-              this.isUsuarioEncontrado = true;
-            }
-          });
+        this.usuarioService.consultarPorDocumento(res).subscribe((user) => {
+          this.isLoadingConsulta = false;
+          if (user[0]) {
+            this.isUsuarioEncontrado = true;
+            this.usuario = user[0];
+          }
+        });
       });
   }
 
   async confirmar() {
     if (this.isUsuarioEncontrado) {
-      this.guardarReserva();
+      this.guardarReservaUsuarioExistente();
+    } else {
+      this.guardarReservaUsuarioNuevo();
     }
+  }
 
+  async guardarReservaUsuarioExistente() {
+    let isLogado = await this.loginUser();
+    if(isLogado){
+      this.guardarReserva();
+    }else{
+      this.notificationService.showError(
+        'El documento o la contraseña son incorrectos'
+      );
+    }
+  }
+
+  async guardarReservaUsuarioNuevo() {
     if (await this.guardarUsuario()) {
       this.guardarReserva();
     }
   }
 
+  async loginUser() {
+    return new Promise<boolean>((resolve) => {
+      this.usuarioService
+        .login(this.documento.value, this.password.value)
+        .subscribe((data) => resolve(data));
+    });
+  }
+
   guardarReserva() {
+    let hechaActual = new Date().toLocaleDateString();
     let reserva: Reserva = {
       id: 0,
-      fecha: '10-04-2021',
+      fecha: hechaActual,
       hora: this.reservaService.horaSelecionada.horaInicial,
       estado: 'RESERVADO',
       valor: this.reservaService.escenarioSeleccionado.valor,
@@ -118,9 +139,11 @@ export class ConfirmarReservaComponent implements OnInit {
     });
   }
 
-  userForm:FormGroup = new FormGroup({nombres: new FormControl('', [Validators.required])});
-  getFormUsuario(userForm:FormGroup){
-    this.userForm = userForm
+  userForm: FormGroup = new FormGroup({
+    nombres: new FormControl('', [Validators.required]),
+  });
+  getFormUsuario(userForm: FormGroup) {
+    this.userForm = userForm;
   }
 
   get habilitarBoton() {

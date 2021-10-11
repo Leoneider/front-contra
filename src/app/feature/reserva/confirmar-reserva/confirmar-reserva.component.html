@@ -36,6 +36,7 @@
                 <mat-form-field validar class="example-full-width" appearance="fill">
                     <mat-label>Documento</mat-label>
                     <input
+                      id="documento"
                       type="email"
                       matInput
                       [formControl]="documento"
@@ -49,6 +50,23 @@
           <mat-divider></mat-divider>
 
           <app-form-usuario [usuario]="usuario" *ngIf="!isUsuarioEncontrado" (usuarioFormEvent)="getFormUsuario($event)"></app-form-usuario>
+
+        
+          <div *ngIf="isUsuarioEncontrado">
+            <h2>Ya estás registrado, ingresa tu contraseña.</h2>
+            <mat-form-field validar class="example-full-width" appearance="fill">
+                <mat-label>Contraseña</mat-label>
+                <input
+                  id="password"
+                  type="text"
+                  matInput
+                  [formControl]="password"
+                  placeholder="Ingresa tu contraseña"
+                />
+              </mat-form-field>
+        </div>
+
+          
           
 
           <div class="flex justify-content-end">

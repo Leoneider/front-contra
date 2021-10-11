@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
+import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 
 
 const routes: Routes = [
@@ -27,7 +28,13 @@ const routes: Routes = [
           import('./feature/reserva/apartar.module').then(
             (m) => m.ApartarModule
           ),
-      },
+      }
+    ],
+  },
+  {
+    path: '',
+    component: AuthLayoutComponent,
+    children: [
       {
         path: 'usuario',
         loadChildren: () =>
