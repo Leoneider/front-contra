@@ -29,6 +29,13 @@ export class ReservaService {
     );
   }
 
+  public consultarPorIdUsuario(idUsuario: number) {
+    return this.http.doGet<Reserva[]>(
+      `${environment.endpoint}/reserva?usuario_id=${idUsuario}`,
+      this.http.optsName('consultar reservas por usuario')
+    );
+  }
+
   public guardar(reserva: Reserva) {
     return this.http.doPost<Reserva, boolean>(
       `${environment.endpoint}/reserva`,

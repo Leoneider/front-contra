@@ -44,7 +44,7 @@ export class ConfirmarReservaComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEscenarioHoraSeleccionada();
-    this.consultarDocumento();
+    this.inputSubscribeDocumento();
   }
 
   getEscenarioHoraSeleccionada() {
@@ -52,26 +52,32 @@ export class ConfirmarReservaComponent implements OnInit {
     this.horaSelecionada = this.reservaService.horaSelecionada;
   }
 
-  isLoadingConsulta: boolean;
+  isLoadingConsulta = false;
   isUsuarioEncontrado = false;
-  consultarDocumento() {
+  inputSubscribeDocumento() {
     this.documento.valueChanges
       .pipe(debounceTime(timeWait), distinctUntilChanged())
-      .subscribe((res: string) => {
+      .subscribe( async(documento: string) => {
         this.isLoadingConsulta = true;
         this.isUsuarioEncontrado = false;
         this.usuario = null;
-        this.usuarioService.consultarPorDocumento(res).subscribe((user) => {
-          this.isLoadingConsulta = false;
-          if (user[0]) {
-            this.isUsuarioEncontrado = true;
-            this.usuario = user[0];
-          }
-        });
+        this.usuario = await this.consultaUsuarioPorDocumento(documento);
+        if (this.usuario) {
+          this.isUsuarioEncontrado = true;
+        }
       });
   }
 
-  async confirmar() {
+  consultaUsuarioPorDocumento(documento: string) {
+    return new Promise<Usuario>((resolve) => {
+      this.usuarioService.consultarPorDocumento(documento).subscribe((user) => {
+          this.isLoadingConsulta = false;
+          resolve(user[0])     
+      });
+    })
+  }
+
+  confirmar() {
     if (this.isUsuarioEncontrado) {
       this.guardarReservaUsuarioExistente();
     } else {
@@ -81,9 +87,9 @@ export class ConfirmarReservaComponent implements OnInit {
 
   async guardarReservaUsuarioExistente() {
     let isLogado = await this.loginUser();
-    if(isLogado){
+    if (isLogado) {
       this.guardarReserva();
-    }else{
+    } else {
       this.notificationService.showError(
         'El documento o la contraseña son incorrectos'
       );
@@ -96,14 +102,30 @@ export class ConfirmarReservaComponent implements OnInit {
     }
   }
 
-  async loginUser() {
+  async guardarUsuario() {
+    let data = {
+      ...this.userForm.value,
+      documento: this.documento.value,
+    };
+    return new Promise<boolean>((resolve) => {
+      this.usuarioService.guardar(data).subscribe(async (res) => {
+        this.password.setValue(this.userForm.get('contrasena').value);
+        this.usuario = await this.consultaUsuarioPorDocumento(this.documento.value);
+        if (await this.loginUser()) {
+          resolve(res);
+        }
+      });
+    });
+  }
+
+  loginUser() {
     return new Promise<boolean>((resolve) => {
       this.usuarioService
         .login(this.documento.value, this.password.value)
         .subscribe((data) => {
-          localStorage.setItem("user", JSON.stringify(this.usuario));
-          resolve(data)}
-        );
+          localStorage.setItem('user', JSON.stringify(this.usuario));
+          resolve(data);
+        });
     });
   }
 
@@ -116,6 +138,7 @@ export class ConfirmarReservaComponent implements OnInit {
       estado: 'RESERVADO',
       valor: this.reservaService.escenarioSeleccionado.valor,
       escenario_id: this.reservaService.escenarioSeleccionado.id,
+      usuario_id: this.usuario.id,
     };
 
     this.reservaService.guardar(reserva).subscribe((res) => {
@@ -123,31 +146,17 @@ export class ConfirmarReservaComponent implements OnInit {
         this.notificationService.showSucces(
           'Se ha realizado la reserva, te esperamos en el juego'
         );
-
         this.router.navigateByUrl('/usuario/perfil');
       }
     });
   }
 
-  async guardarUsuario() {
-    let data = {
-      ...this.userForm.value,
-      documento: this.documento.value,
-    };
-    return new Promise<boolean>((resolve) => {
-      this.usuarioService.guardar(data).subscribe((res) => {
-        this.password.setValue(this.userForm.get('contrasena').value);
-        this.usuario = data;
-        if(this.loginUser()){
-          resolve(res);
-        };
-      });
-    });
-  }
+
 
   userForm: FormGroup = new FormGroup({
     nombres: new FormControl('', [Validators.required]),
   });
+
   getFormUsuario(userForm: FormGroup) {
     this.userForm = userForm;
   }

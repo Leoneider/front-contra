@@ -35,6 +35,7 @@ describe('ApartarComponent', () => {
         estado: 'RESERVADA',
         valor: 70000,
         escenario_id: 1,
+        usuario_id: 1
       }]);
     },
   };

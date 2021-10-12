@@ -5,4 +5,5 @@ export interface Reserva {
   estado: string;
   valor: number;
   escenario_id: number;
+  usuario_id: number;
 }
