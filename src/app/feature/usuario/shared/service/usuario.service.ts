@@ -40,11 +40,11 @@ export class UsuarioService {
   }
 
   public login(documento: string, password: string) {
-    return this.http.doGet<boolean>(
-      `${environment.endpoint}/usuarios?documento=${documento}&contrasena=${password}`,
-      this.http.optsName('consultar usuarios')
-    ).pipe(
-      map( res => res[0] ? true : false)
-    );
+    return this.http
+      .doGet<boolean>(
+        `${environment.endpoint}/usuarios?documento=${documento}&contrasena=${password}`,
+        this.http.optsName('consultar usuarios')
+      )
+      .pipe(map((res) => (res[0] ? true : false)));
   }
 }

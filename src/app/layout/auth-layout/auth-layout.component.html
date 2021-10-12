@@ -1,24 +1,19 @@
 <mat-toolbar>
-    
-    <mat-icon>fitbit</mat-icon>
+  <mat-icon>fitbit</mat-icon>
 
-    <span> Contra </span>
-    <span class="spacer"></span>
+  <span> Contra </span>
+  <span class="spacer"></span>
 
-    <button mat-raised-button color="warn">
-        <mat-icon>cancel</mat-icon>
-        <span class="ml-1">Cerrar Sesión</span>
-    </button>
-   
+  <button mat-raised-button color="warn" (click)="logout()">
+    <mat-icon>cancel</mat-icon>
+    <span class="ml-1">Cerrar Sesión</span>
+  </button>
 </mat-toolbar>
 
-
-
-
-
-
-<div class="flex flex-column flex-wrap align-items-center justify-content-center">
-    <div class="w-12 md:w-9 lg:w-8 h-full" style="background-color: brown;">
-        <router-outlet></router-outlet>
-    </div>
+<div
+  class="flex flex-column flex-wrap align-items-center justify-content-center"
+>
+  <div class="w-12 md:w-9 lg:w-8 h-full" style="background-color: brown">
+    <router-outlet></router-outlet>
+  </div>
 </div>

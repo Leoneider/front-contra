@@ -100,7 +100,10 @@ export class ConfirmarReservaComponent implements OnInit {
     return new Promise<boolean>((resolve) => {
       this.usuarioService
         .login(this.documento.value, this.password.value)
-        .subscribe((data) => resolve(data));
+        .subscribe((data) => {
+          localStorage.setItem("user", JSON.stringify(this.usuario));
+          resolve(data)}
+        );
     });
   }
 
@@ -131,10 +134,13 @@ export class ConfirmarReservaComponent implements OnInit {
       ...this.userForm.value,
       documento: this.documento.value,
     };
-
     return new Promise<boolean>((resolve) => {
       this.usuarioService.guardar(data).subscribe((res) => {
-        resolve(res);
+        this.password.setValue(this.userForm.get('contrasena').value);
+        this.usuario = data;
+        if(this.loginUser()){
+          resolve(res);
+        };
       });
     });
   }
