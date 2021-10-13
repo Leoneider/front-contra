@@ -10,7 +10,7 @@ describe('AuthGuard', () => {
     TestBed.configureTestingModule({
       imports: [  RouterTestingModule.withRoutes([
         { path: 'home', component: HomeComponent },
-      ]),]
+      ])]
     });
     guard = TestBed.inject(SecurityGuard);
   });
