@@ -38,6 +38,7 @@
               [class.disabled] = "!hora.isDisponible"
               style="width: 250px"
               (click)="seleccionarHora(hora)"
+              [id]="hora.horaInicial"
             >
           
 
@@ -70,7 +71,7 @@
         </div>
       </div>
       <div class="flex justify-content-center">
-        <button (click)="confirmarHora()" [disabled]= "isSeleccionado" mat-raised-button color="primary" style="margin: 16px" >
+        <button id="btn_confirmar_hora" (click)="confirmarHora()" [disabled]= "isSeleccionado" mat-raised-button color="primary" style="margin: 16px" >
           CONFIRMAR HORA
         </button>
       </div>

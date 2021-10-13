@@ -4,6 +4,7 @@
       <div class="flex align-items-center justify-content-center">
         <mat-card
           class="example-card"
+          [id]="escenario.id"
           (click)="seleccionar(escenario)"
           [class.active]="escenario.id == selectedEscenario.id"
         >
