@@ -37,7 +37,6 @@ export class PerfilComponent implements OnInit {
       .consultarPorIdUsuario(this.userLogado.id)
       .subscribe((res) => {
         this.reservas = res;
-        console.log('RESERVAS', this.reservas);
       });
   }
 }

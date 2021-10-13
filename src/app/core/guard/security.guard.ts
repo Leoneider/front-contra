@@ -13,12 +13,12 @@ export class SecurityGuard implements CanActivate {
   }
 
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    let usuario:Usuario = JSON.parse(localStorage.getItem("user"));
+    let usuario:Usuario = JSON.parse(localStorage.getItem('user'));
     if(usuario){
       return true;
     }
-    this.router.navigate(['/home'])
-    return false
+    this.router.navigate(['/home']);
+    return false;
   }
 
 }
