@@ -15,7 +15,7 @@ export class AuthLayoutComponent implements OnInit {
 
   logout(){
     localStorage.removeItem("user");
-    this.router.navigateByUrl('home');
+    this.router.navigateByUrl('pages/home');
   }
 
 }

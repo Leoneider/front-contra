@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpService } from '@core/services/http.service';
 import { NotificationService } from '@core/services/notification.service';
-import { HomeComponent } from '@home/home.component';
+import { HomeComponent } from '@pages/home/home.component';
 import { NotifierModule } from 'angular-notifier';
 import { EscenarioService } from 'src/app/feature/escenario/shared/service/escenario.service';
 

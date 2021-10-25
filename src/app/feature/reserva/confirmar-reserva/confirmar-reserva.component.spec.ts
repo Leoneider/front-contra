@@ -11,27 +11,9 @@ import { ConfirmarReservaComponent } from './confirmar-reserva.component';
 import * as Rx from 'rxjs';
 import { PerfilComponent } from '../../usuario/components/perfil/perfil.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { UsuarioServiceStub } from 'test/UsuarioServiceStub';
 
-export class UsuarioMockService {
-  guardar() {
-    return Rx.of(true);
-  }
-  login() {
-    return Rx.of(true);
-  }
-  consultarPorDocumento() {
-    return Rx.of({
-      id: 1,
-      documento: '1091661577',
-      nombres: 'leoneider',
-      apellidos: 'trigos guerrero',
-      celular: '3174638521',
-      email: 'leoneider@hotmail.es',
-      fehca_nacimiento: '24-06-1989',
-      contrasena: '123456',
-    });
-  }
-}
+
 
 describe('ConfirmarReservaComponent', () => {
   let component: ConfirmarReservaComponent;
@@ -70,7 +52,7 @@ describe('ConfirmarReservaComponent', () => {
       ],
       providers: [
         { provide: ReservaService,HttpService, NotificationService, useValue: reservaMockService },
-        { provide: UsuarioService, useClass: UsuarioMockService },
+        { provide: UsuarioService, useClass: UsuarioServiceStub },
       ],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

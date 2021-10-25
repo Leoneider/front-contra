@@ -6,13 +6,14 @@ import { HttpService } from '@core/services/http.service';
 import { NotificationService } from '@core/services/notification.service';
 import { SharedModule } from '@shared/shared.module';
 import { NotifierModule } from 'angular-notifier';
-import { EscenarioModule } from '../escenario/escenario.module';
-import { EscenarioService } from '../escenario/shared/service/escenario.service';
-import { ApartarComponent } from '../reserva/reservar-escenario/apartar.component';
+
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { HomeComponent } from './home.component';
 import { of } from 'rxjs';
+import { ApartarComponent } from '../../reserva/reservar-escenario/apartar.component';
+import { EscenarioService } from '../../escenario/shared/service/escenario.service';
+import { EscenarioModule } from '../../escenario/escenario.module';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;

@@ -27,9 +27,6 @@
       "@core-service/*": [
         "src/app/core/services/*"
       ],
-      "@home/*": [
-        "src/app/feature/home/*"
-      ],
       "@shared/*": [
         "src/app/shared/*"
       ]

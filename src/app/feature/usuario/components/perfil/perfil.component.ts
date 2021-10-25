@@ -24,12 +24,9 @@ export class PerfilComponent implements OnInit {
 
   constructor(private reservaService: ReservaService) {}
 
-  ngOnInit(): void {
-    this.userLogado = JSON.parse(localStorage.getItem('user'));
-
-    setTimeout(() => {
-      this.listadoDeReservas();
-    }, 0);
+  async ngOnInit(){
+    this.userLogado = await this.obtenerUsuario();
+    this.listadoDeReservas();
   }
 
   listadoDeReservas() {
@@ -38,5 +35,11 @@ export class PerfilComponent implements OnInit {
       .subscribe((res) => {
         this.reservas = res;
       });
+  }
+
+  obtenerUsuario(){
+    return new Promise<Usuario>((resolve) => {
+      resolve(JSON.parse(localStorage.getItem('user')));
+    })
   }
 }
