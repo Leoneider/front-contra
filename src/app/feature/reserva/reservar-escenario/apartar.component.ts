@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationService } from '@core/services/notification.service';
 import { Escenario } from '../../escenario/shared/model/escenario';
+import { Dia } from '../shared/model/dia';
 import { HoraDisponible } from '../shared/model/hora-disponibles';
 import { Reserva } from '../shared/model/reserva';
 import { ReservaService } from '../shared/services/reserva.service';
@@ -32,6 +33,35 @@ export class ApartarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getHorario();
+    this.obtenerDiasDeLaSemana();
+
+  
+  }
+
+  dias:Dia[] = [];
+  obtenerDiasDeLaSemana(){
+   
+    let fechaActual = new Date();
+    let dayMes = fechaActual.getDate();
+    let daySemana = fechaActual.getDay();
+    let inicioSemana = dayMes - daySemana;
+    const diasSemana = ['DOM', 'LUN', 'MAR', 'MIE', 'JUE', 'VIE', 'SAB'];
+    let indexDia = 0;
+    diasSemana.forEach( item => {
+      console.log(item);
+
+      let dia:Dia = {
+        diaNombre : item,
+        numeroDia: inicioSemana + indexDia
+      };
+         
+      this.dias.push(dia);
+      indexDia += 1;
+    }) 
+  }
+
+  getHorario(){
     if (this.reservaService.escenarioSeleccionado) {
       this.escenario = this.reservaService.escenarioSeleccionado;
       this.calcularHorarioDisponible(

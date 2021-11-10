@@ -4,7 +4,7 @@
   }
 
   .horario{
-
+    width: 400px;
     .border-top-1{
         border-color: #dadce0;
     }
@@ -19,6 +19,7 @@
   }
 
 .div-select{
+  width: 100%;
   cursor: pointer;
   &:hover{
     background-color: #e8f5e9;

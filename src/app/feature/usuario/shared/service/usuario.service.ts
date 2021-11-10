@@ -12,21 +12,21 @@ export class UsuarioService {
 
   public consultar() {
     return this.http.doGet<Usuario[]>(
-      `${environment.endpoint}/usuarios`,
+      `${environment.endpointCore}/usuarios`,
       this.http.optsName('consultar usuarios')
     );
   }
 
   public consultarPorDocumento(documento: string) {
     return this.http.doGet<Usuario[]>(
-      `${environment.endpoint}/usuarios?documento=${documento}`,
+      `${environment.endpointCore}/usuarios?documento=${documento}`,
       this.http.optsName('consultar usuarios')
     );
   }
 
   public guardar(usuario: Usuario) {
     return this.http.doPost<Usuario, boolean>(
-      `${environment.endpoint}/usuarios`,
+      `${environment.endpointCore}/usuarios`,
       usuario,
       this.http.optsName('crear/actualizar usuarios')
     );
@@ -34,7 +34,7 @@ export class UsuarioService {
 
   public eliminar(usuario: Usuario) {
     return this.http.doDelete<boolean>(
-      `${environment.endpoint}/usuarios/${usuario.id}`,
+      `${environment.endpointCore}/usuarios/${usuario.id}`,
       this.http.optsName('eliminar usuarios')
     );
   }
@@ -42,7 +42,7 @@ export class UsuarioService {
   public login(documento: string, password: string) {
     return this.http
       .doGet<boolean>(
-        `${environment.endpoint}/usuarios?documento=${documento}&contrasena=${password}`,
+        `${environment.endpointCore}/usuarios?documento=${documento}&contrasena=${password}`,
         this.http.optsName('consultar usuarios')
       )
       .pipe(map((res) => (res[0] ? true : false)));

@@ -11,14 +11,14 @@ export class EscenarioService {
 
   public consultar() {
     return this.http.doGet<Escenario[]>(
-      `${environment.endpoint}/escenario`,
+      `${environment.endpointCore}/escenario`,
       this.http.optsName('consultar escenarios')
     );
   }
 
   public guardar(producto: Escenario) {
     return this.http.doPost<Escenario, boolean>(
-      `${environment.endpoint}/escenario`,
+      `${environment.endpointCore}/escenario`,
       producto,
       this.http.optsName('crear/actualizar escenarios')
     );
@@ -26,7 +26,7 @@ export class EscenarioService {
 
   public eliminar(producto: Escenario) {
     return this.http.doDelete<boolean>(
-      `${environment.endpoint}/escenario/${producto.id}`,
+      `${environment.endpointCore}/escenario/${producto.id}`,
       this.http.optsName('eliminar escenarios')
     );
   }
