@@ -12,6 +12,7 @@ export class ReservaService {
   reserva: Reserva;
   escenarioSeleccionado: Escenario;
   horaSelecionada: HoraDisponible;
+  fechaSeleccionada: string;
 
   constructor(protected http: HttpService) {}
 
@@ -24,7 +25,7 @@ export class ReservaService {
 
   public consultarPorFechaAndIdEscenario(fecha: string, idEscenario: number) {
     return this.http.doGet<Reserva[]>(
-      `${environment.endpointCore}/reserva?fecha=${fecha}&escenario_id=${idEscenario}`,
+      `${environment.endpointCore}/reservas/escenario/${idEscenario}/fecha/${fecha}`,
       this.http.optsName('consultar reservas por fecha y escenario')
     );
   }
@@ -38,7 +39,7 @@ export class ReservaService {
 
   public guardar(reserva: Reserva) {
     return this.http.doPost<Reserva, boolean>(
-      `${environment.endpointCore}/reserva`,
+      `${environment.endpointCore}/reservas`,
       reserva,
       this.http.optsName('crear/actualizar reservas')
     );

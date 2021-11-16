@@ -27,17 +27,7 @@ describe('ApartarComponent', () => {
       horaFinal: 20,
     },
     horaSelecionada: { horaInicial: 18, isDisponible: true },
-    consultarPorFechaAndIdEscenario: () => {
-      return Rx.of([{
-        id: 1,
-        fecha: '10-04-2021',
-        hora: 13,
-        estado: 'RESERVADA',
-        valor: 70000,
-        escenario_id: 1,
-        usuario_id: 1
-      }]);
-    },
+    
   };
 
   beforeEach(async () => {

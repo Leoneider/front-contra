@@ -130,15 +130,13 @@ export class ConfirmarReservaComponent implements OnInit {
   }
 
   guardarReserva() {
-    let hechaActual = new Date().toLocaleDateString();
     let reserva: Reserva = {
-      id: 0,
-      fecha: hechaActual,
+      fecha: this.reservaService.fechaSeleccionada,
       hora: this.reservaService.horaSelecionada.horaInicial,
       estado: 'RESERVADO',
       valor: this.reservaService.escenarioSeleccionado.valor,
-      escenario_id: this.reservaService.escenarioSeleccionado.id,
-      usuario_id: this.usuario.id,
+      escenarioId: this.reservaService.escenarioSeleccionado.id,
+      usuarioId: this.usuario.id,
     };
 
     this.reservaService.guardar(reserva).subscribe((res) => {

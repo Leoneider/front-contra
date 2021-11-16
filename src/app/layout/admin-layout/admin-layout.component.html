@@ -1,22 +1,41 @@
+<div class="container">
+  <header class="item header">
+    <mat-toolbar class="box shadow-3">
+      <div class="header__toolbar">
+        <img src="../../../assets/img/logo.svg" alt="" />
 
-<mat-toolbar class="box shadow-3">
-    <mat-icon>fitbit</mat-icon>
-    <span> Contra </span>
-    <span class="spacer"></span>
-    <button mat-raised-button>
-        <mat-icon>login</mat-icon>
-        <span class="ml-1">Ingresar</span>
-    </button>
-</mat-toolbar>
+        <span class="spacer"></span>
+        <!-- <button mat-raised-button>
+          <mat-icon>login</mat-icon>
+          <span class="ml-1">Ingresar</span>
+        </button> -->
+
+      </div>
+   
+    </mat-toolbar>
 
 
+  </header>
 
+  <aside class="item asidel"></aside>
 
-
-
-<div class="flex flex-column flex-wrap align-items-center justify-content-center">
-    <div class="w-12 md:w-9 lg:w-8 container">
+  <section class="item section">
+    <perfect-scrollbar>
+      <div
+        class="
+          flex flex-column flex-wrap
+          justify-content-center
+          p-3
+        "
+      >
         <router-outlet></router-outlet>
-    </div>
-</div>
+      </div>
+    </perfect-scrollbar>
+  </section>
+  <aside class="item asider">
+    <perfect-scrollbar> </perfect-scrollbar>
+  </aside>
 
+  <footer class="item footer">
+    <p class="text-center">Hecho con 💪 por <a href="#">DevOps42</a>.</p></footer>
+</div>

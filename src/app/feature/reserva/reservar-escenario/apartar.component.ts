@@ -1,13 +1,16 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationService } from '@core/services/notification.service';
 import { Escenario } from '../../escenario/shared/model/escenario';
-import { Dia } from '../shared/model/dia';
+// import { Dia } from '../shared/model/dia';
 import { HoraDisponible } from '../shared/model/hora-disponibles';
 import { Reserva } from '../shared/model/reserva';
 import { ReservaService } from '../shared/services/reserva.service';
 
-const fechaActual = new Date().toLocaleDateString();  
+
+
 
 @Component({
   selector: 'app-apartar',
@@ -20,46 +23,48 @@ export class ApartarComponent implements OnInit {
   reservasDelEscenario: Reserva[] = [];
 
   horaSeleccionada: HoraDisponible;
-  
+
+  fechaSeleccionada = new FormControl('');
+  fechaActual:string;
+
+  fechaMinimaDeReserva: Date;
+
   constructor(
     private readonly router: Router,
     private notificationService: NotificationService,
-    public reservaService: ReservaService
+    public reservaService: ReservaService,
+    private datePipe: DatePipe
   ) {
     this.horaSeleccionada = {
       horaInicial: 0,
       isDisponible: false,
     };
+    
+    this.fechaActual = this.datePipe.transform(new Date().toISOString() , 'yyyy-MM-dd')
+
+    this.fechaMinimaDeReserva = new Date(this.returnDateMinimaParaReserva(this.fechaActual));
+    this.fechaSeleccionada.setValue(new Date());
   }
 
   ngOnInit(): void {
     this.getHorario();
-    this.obtenerDiasDeLaSemana();
-
-  
   }
 
-  dias:Dia[] = [];
-  obtenerDiasDeLaSemana(){
-   
-    let fechaActual = new Date();
-    let dayMes = fechaActual.getDate();
-    let daySemana = fechaActual.getDay();
-    let inicioSemana = dayMes - daySemana;
-    const diasSemana = ['DOM', 'LUN', 'MAR', 'MIE', 'JUE', 'VIE', 'SAB'];
-    let indexDia = 0;
-    diasSemana.forEach( item => {
-      console.log(item);
 
-      let dia:Dia = {
-        diaNombre : item,
-        numeroDia: inicioSemana + indexDia
-      };
-         
-      this.dias.push(dia);
-      indexDia += 1;
-    }) 
+  returnDateMinimaParaReserva( date:string, splitChar:string = "-"){
+    let fecha:string[] = date.split(splitChar);
+    let anio:number = +fecha[0];
+    let mes:number =  +fecha[1]-1;
+    let dia:number = +fecha[2];
+    return new Date(anio,mes,dia)
   }
+
+  fechaSeleccionadaChange(){
+    console.log(this.fechaSeleccionada.value);
+    this.horasDisponibles = [];
+    this.getHorario();
+  }
+
 
   getHorario(){
     if (this.reservaService.escenarioSeleccionado) {
@@ -98,7 +103,7 @@ export class ApartarComponent implements OnInit {
   consultarReservas() {
     return new Promise<Reserva[]>((resolve) => {
       this.reservaService
-        .consultarPorFechaAndIdEscenario(fechaActual, this.escenario.id)
+        .consultarPorFechaAndIdEscenario(this.datePipe.transform(this.fechaSeleccionada.value.toISOString() , 'yyyy-MM-dd'), this.escenario.id)
         .subscribe((res) => {
           this.reservasDelEscenario = res;
           resolve(this.reservasDelEscenario);
@@ -107,6 +112,8 @@ export class ApartarComponent implements OnInit {
   }
 
   confirmarHora() {
+    this.reservaService.fechaSeleccionada = this.datePipe.transform(this.fechaSeleccionada.value, 'yyyy-MM-dd');
+
     if (this.horaSeleccionada.horaInicial) {
       this.reservaService.horaSelecionada = this.horaSeleccionada;
       this.redirectConfirm();

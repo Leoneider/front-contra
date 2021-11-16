@@ -1,6 +1,6 @@
 <div style="padding: 16px">
   <div class="grid">
-    <div class="col-12 md:col-6 lg:col-6" *ngFor="let escenario of escenarios">
+    <div class="col-12 md:col-6 lg:col-4" *ngFor="let escenario of escenarios">
       <div class="flex align-items-center justify-content-center">
         <mat-card
           class="example-card"
@@ -9,11 +9,11 @@
           [class.active]="escenario.id == selectedEscenario.id"
         >
           <mat-card-title-group>
-            <mat-card-title>{{ escenario.nombre }}</mat-card-title>
+            <mat-card-title>{{ escenario.nombre | titlecase }}</mat-card-title>
             <mat-card-subtitle class="m-0"
-              >De: 2 PM Hasta: 5 PM</mat-card-subtitle
+              >De: {{ escenario.horaInicial | doceHoras}} a: {{ escenario.horaFinal | doceHoras }}</mat-card-subtitle
             >
-            <mat-card-subtitle>{{ escenario.direccion }}</mat-card-subtitle>
+            <mat-card-subtitle>{{ escenario.direccion | titlecase }}</mat-card-subtitle>
             <mat-card-title>{{ escenario.valor | currency }}</mat-card-title>
             <img
               class="border-round"

@@ -21,83 +21,72 @@
     <div class="col-12 md:col-6 lg:col-6">
       <h1 class="mb-6">Selecciona el dia y la hora del partido:</h1>
 
-      <div class="col-12">
-        <div class="flex justify-content-center">
-          <div class="horario">
-         
+      <div>
+        <mat-form-field class="w-full" color="primary" appearance="fill">
+          <mat-label>Fecha</mat-label>
+          <input
+            matInput
+            [min]="fechaMinimaDeReserva"
+            [matDatepicker]="picker"
+            [formControl]="fechaSeleccionada"
+            (dateChange)="fechaSeleccionadaChange()"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker color="primary"></mat-datepicker>
+        </mat-form-field>
+      </div>
 
-        
-                <div
-                  class="
-                    flex flex-column
-                    align-items-center
-                    justify-content-end
-                    w-3rem
-                    border-1 border-300
-                    hidden md:block lg:block
-                  "
-                  *ngFor="let dia of dias"
-                >
-                  <p class="text-500 mb-0">{{ dia.diaNombre }}</p>
-                  <span class="font-normal">{{ dia.numeroDia }}</span>
-                </div>
-             
-            
-
+      <div class="flex justify-content-center">
+        <div class="horario">
+          <div
+            class="flex flex-grow-1"
+            style="height: 40px"
+            *ngFor="let hora of horasDisponibles"
+          >
+            <div class="hora">{{ hora.horaInicial | doceHoras }}</div>
+            <div class="border-top-1" style="width: 7px"></div>
             <div
-              class="flex flex-grow-1"
-              style="height: 40px"
-              *ngFor="let hora of horasDisponibles"
+              class="flex border-top-1 border-right-1 border-left-1 div-select"
+              [class.disabled]="!hora.isDisponible"
+              (click)="seleccionarHora(hora)"
+              [id]="hora.horaInicial"
             >
-              <div class="hora">{{ hora.horaInicial }} PM</div>
-              <div class="border-top-1" style="width: 7px"></div>
               <div
-                class="
-                  flex
-                  border-top-1 border-right-1 border-left-1
-                  div-select
-                "
-                [class.disabled]="!hora.isDisponible"
-                (click)="seleccionarHora(hora)"
-                [id]="hora.horaInicial"
+                class="flex-auto flex align-items-center justify-content-center"
               >
-                <div
-                  class="
-                    flex-auto flex
-                    align-items-center
-                    justify-content-center
-                  "
+                <span *ngIf="!hora.isDisponible" class="text-center reservada"
+                  >RESERVADA</span
                 >
-                  <span *ngIf="!hora.isDisponible" class="text-center reservada"
-                    >RESERVADA</span
-                  >
-                </div>
+              </div>
 
-                <div
-                  *ngIf="hora.isDisponible"
-                  class="flex-auto flex align-items-center justify-content-end"
+              <div
+                *ngIf="hora.isDisponible"
+                class="flex-auto flex align-items-center justify-content-end"
+              >
+                <mat-icon
+                  [class.active]="
+                    hora.horaInicial == horaSeleccionada.horaInicial
+                  "
+                  color="success"
+                  class="mr-2 icon"
+                  aria-hidden="false"
+                  aria-label="Example home icon"
+                  >check_circle_outline</mat-icon
                 >
-                  <mat-icon
-                    [class.active]="
-                      hora.horaInicial == horaSeleccionada.horaInicial
-                    "
-                    color="success"
-                    class="mr-2 icon"
-                    aria-hidden="false"
-                    aria-label="Example home icon"
-                    >check_circle_outline</mat-icon
-                  >
-                </div>
               </div>
             </div>
+          </div>
 
-            <div class="flex">
-              <div class="hora">{{ this.escenario.horaFinal + 1 }} PM</div>
-              <!-- <div class="border-top-1" style="width: 259px"></div> -->
-            </div>
+          <div class="flex">
+            <div class="hora">{{ this.escenario.horaFinal + 1 | doceHoras }}</div>
+            <div class="border-top-1" style="width: 100%"></div>
           </div>
         </div>
       </div>
+
       <div class="flex justify-content-center">
         <button
           id="btn_confirmar_hora"

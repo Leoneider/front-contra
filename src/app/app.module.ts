@@ -9,6 +9,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { HttpClientModule } from '@angular/common/http';
+import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
+
 
 /**
  * Custom angular notifier options
@@ -63,9 +69,13 @@ const customNotifierOptions: NotifierOptions = {
     BrowserAnimationsModule,
     LayoutModule,
     NotifierModule.withConfig(customNotifierOptions),
-    HttpClientModule
+    HttpClientModule,
+    PerfectScrollbarModule
   ],
-  providers: [CookieService],
+  providers: [CookieService, {
+    provide: PERFECT_SCROLLBAR_CONFIG,
+    useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+  }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
