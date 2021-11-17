@@ -53,9 +53,9 @@ export class ApartarComponent implements OnInit {
 
   returnDateMinimaParaReserva( date:string, splitChar:string = "-"){
     let fecha:string[] = date.split(splitChar);
-    let anio:number = +fecha[0];
-    let mes:number =  +fecha[1]-1;
-    let dia:number = +fecha[2];
+    let anio = +fecha[0];
+    let mes =  +fecha[1]-1;
+    let dia = +fecha[2];
     return new Date(anio,mes,dia)
   }
 
