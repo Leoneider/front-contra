@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -10,6 +10,10 @@ import { LayoutModule } from './layout/layout.module';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { HttpClientModule } from '@angular/common/http';
 import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+
+import localeEs from "@angular/common/locales/es";
+import { registerLocaleData } from "@angular/common";
+registerLocaleData(localeEs, "es");
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -75,7 +79,8 @@ const customNotifierOptions: NotifierOptions = {
   providers: [CookieService, {
     provide: PERFECT_SCROLLBAR_CONFIG,
     useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-  }],
+  },
+  { provide: LOCALE_ID, useValue: "es" }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
