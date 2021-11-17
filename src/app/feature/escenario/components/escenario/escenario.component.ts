@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Escenario } from '../../shared/model/escenario';
 
 @Component({
@@ -9,6 +10,8 @@ import { Escenario } from '../../shared/model/escenario';
 export class EscenarioComponent implements OnInit {
   @Input() escenarios: Escenario[];
   @Output() selectEscenario = new EventEmitter<Escenario>();
+
+  stringFilter = new FormControl("");
 
   selectedEscenario: Escenario = {
     id: 0,
@@ -27,5 +30,9 @@ export class EscenarioComponent implements OnInit {
   seleccionar(e: Escenario) {
     this.selectedEscenario = e;
     this.selectEscenario.emit(this.selectedEscenario);
+  }
+
+  buscarEscenario(){
+    
   }
 }

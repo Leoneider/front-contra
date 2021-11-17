@@ -12,26 +12,34 @@ export class ReservaService {
   reserva: Reserva;
   escenarioSeleccionado: Escenario;
   horaSelecionada: HoraDisponible;
+  fechaSeleccionada: string;
 
   constructor(protected http: HttpService) {}
 
   public consultar() {
     return this.http.doGet<Reserva[]>(
-      `${environment.endpoint}/reserva`,
+      `${environment.endpointCore}/reserva`,
       this.http.optsName('consultar reservas')
     );
   }
 
   public consultarPorFechaAndIdEscenario(fecha: string, idEscenario: number) {
     return this.http.doGet<Reserva[]>(
-      `${environment.endpoint}/reserva?fecha=${fecha}&escenario_id=${idEscenario}`,
+      `${environment.endpointCore}/reservas/escenario/${idEscenario}/fecha/${fecha}`,
       this.http.optsName('consultar reservas por fecha y escenario')
+    );
+  }
+
+  public consultarPorIdUsuario(idUsuario: number) {
+    return this.http.doGet<Reserva[]>(
+      `${environment.endpointCore}/reserva?usuario_id=${idUsuario}`,
+      this.http.optsName('consultar reservas por usuario')
     );
   }
 
   public guardar(reserva: Reserva) {
     return this.http.doPost<Reserva, boolean>(
-      `${environment.endpoint}/reserva`,
+      `${environment.endpointCore}/reservas`,
       reserva,
       this.http.optsName('crear/actualizar reservas')
     );
@@ -39,7 +47,7 @@ export class ReservaService {
 
   public eliminar(reserva: Reserva) {
     return this.http.doDelete<boolean>(
-      `${environment.endpoint}/reserva/${reserva.id}`,
+      `${environment.endpointCore}/reserva/${reserva.id}`,
       this.http.optsName('eliminar reservas')
     );
   }

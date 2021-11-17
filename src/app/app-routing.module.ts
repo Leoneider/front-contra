@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { SecurityGuard } from '@core/guard/security.guard';
+import { NotFoundComponent } from './feature/page/not-found/not-found.component';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 
-const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+export const routes: Routes = [
+  { path: '', redirectTo: '/pages/home', pathMatch: 'full' },
   {
     path: '',
     component: AdminLayoutComponent,
     children: [
       {
-        path: 'home',
+        path: 'pages',
         loadChildren: () =>
-          import('@home/home.module').then((mod) => mod.HomeModule),
+          import('./feature/page/page.module').then((mod) => mod.PageModule),
       },
       {
         path: 'escenario',
@@ -28,13 +30,6 @@ const routes: Routes = [
             (m) => m.ApartarModule
           ),
       },
-      {
-        path: 'usuario',
-        loadChildren: () =>
-          import('./feature/usuario/usuarios.module').then(
-            (m) => m.UsuariosModule
-          ),
-      },
     ],
   },
   {
@@ -42,12 +37,16 @@ const routes: Routes = [
     component: AuthLayoutComponent,
     children: [
       {
-        path: 'producto',
+        path: 'usuario',
+        canActivate: [SecurityGuard],
         loadChildren: () =>
-          import('@producto/producto.module').then((mod) => mod.ProductoModule),
+          import('./feature/usuario/usuarios.module').then(
+            (m) => m.UsuariosModule
+          ),
       },
     ],
   },
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

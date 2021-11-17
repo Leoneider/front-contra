@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json -o",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --prod",
     "test": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
     "lint": "ng lint",
@@ -26,6 +26,7 @@
     "angular-notifier": "^9.1.0",
     "karma-sonarqube-reporter": "^1.4.0",
     "ngx-cookie-service": "^11.0.2",
+    "ngx-perfect-scrollbar": "^10.1.1",
     "primeflex": "^3.0.1",
     "rxjs": "~6.6.7",
     "tslib": "^2.2.0",

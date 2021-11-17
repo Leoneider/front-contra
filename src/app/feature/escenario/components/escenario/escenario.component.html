@@ -1,19 +1,39 @@
 <div style="padding: 16px">
+  <div class="flex">
+    <mat-form-field class="example-form-field" appearance="fill">
+      <mat-label>Buscar una cancha</mat-label>
+      <input matInput type="text"  [formControl]="stringFilter" />
+      <button
+        matSuffix
+        mat-icon-button
+        color="primary"
+        (click)="buscarEscenario()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
   <div class="grid">
-    <div class="col-12 md:col-6 lg:col-6" *ngFor="let escenario of escenarios">
+    <div class="col-12 md:col-6 lg:col-4" *ngFor="let escenario of escenarios">
       <div class="flex align-items-center justify-content-center">
         <mat-card
           class="example-card"
+          [id]="escenario.id"
           (click)="seleccionar(escenario)"
           [class.active]="escenario.id == selectedEscenario.id"
         >
           <mat-card-title-group>
-            <mat-card-title>{{ escenario.nombre }}</mat-card-title>
+            <mat-card-title>{{ escenario.nombre | titlecase }}</mat-card-title>
             <mat-card-subtitle class="m-0"
-              >De: 2 PM Hasta: 5 PM</mat-card-subtitle
+              >De: {{ escenario.horaInicial | doceHoras }} a:
+              {{ escenario.horaFinal | doceHoras }}</mat-card-subtitle
             >
-            <mat-card-subtitle>{{ escenario.direccion }}</mat-card-subtitle>
-            <mat-card-title>{{ escenario.valor | currency }}</mat-card-title>
+            <mat-card-subtitle>{{
+              escenario.direccion | firstMayus
+            }}</mat-card-subtitle>
+            <mat-card-title>{{
+              escenario.valor | currency: 'COP':'symbol':'1.0-0'
+            }}</mat-card-title>
             <img
               class="border-round"
               mat-card-md-image

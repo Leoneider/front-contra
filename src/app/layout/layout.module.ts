@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
@@ -17,5 +17,6 @@ import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
     MatButtonModule,
   ],
   exports: [AdminLayoutComponent, AuthLayoutComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class LayoutModule {}

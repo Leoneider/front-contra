@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  endpoint: '/prospectos-vida'
+  endpointCore: 'http://localhost:3000/core'
 };

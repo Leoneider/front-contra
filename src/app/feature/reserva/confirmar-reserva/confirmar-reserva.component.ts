@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationService } from '@core/services/notification.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Escenario } from '../../escenario/shared/model/escenario';
-import { FormUsuarioComponent } from '../../usuario/components/form-usuario/form-usuario.component';
 import { Usuario } from '../../usuario/shared/model/usuario';
 import { UsuarioService } from '../../usuario/shared/service/usuario.service';
 import { HoraDisponible } from '../shared/model/hora-disponibles';
@@ -18,17 +17,15 @@ const timeWait = 1500;
   styleUrls: ['./confirmar-reserva.component.scss'],
 })
 export class ConfirmarReservaComponent implements OnInit {
-  @ViewChild(FormUsuarioComponent) usuarioForm: FormUsuarioComponent;
-
   escenarioSeleccionado: Escenario;
   horaSelecionada: HoraDisponible;
   usuario: Usuario;
-  
 
   documento = new FormControl('', [Validators.required]);
+  password = new FormControl('', [Validators.required]);
 
   constructor(
-    private router: Router,
+    public router: Router,
     private reservaService: ReservaService,
     private usuarioService: UsuarioService,
     private notificationService: NotificationService
@@ -47,7 +44,7 @@ export class ConfirmarReservaComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEscenarioHoraSeleccionada();
-    this.consultarDocumento();
+    this.inputSubscribeDocumento();
   }
 
   getEscenarioHoraSeleccionada() {
@@ -55,45 +52,90 @@ export class ConfirmarReservaComponent implements OnInit {
     this.horaSelecionada = this.reservaService.horaSelecionada;
   }
 
-  isLoadingConsulta: boolean;
+  isLoadingConsulta = false;
   isUsuarioEncontrado = false;
-  consultarDocumento() {
+  inputSubscribeDocumento() {
     this.documento.valueChanges
       .pipe(debounceTime(timeWait), distinctUntilChanged())
-      .subscribe((res: string) => {
+      .subscribe( async(documento: string) => {
         this.isLoadingConsulta = true;
         this.isUsuarioEncontrado = false;
         this.usuario = null;
-        this.usuarioService
-          .consultarPorDocumento(res)
-          .subscribe((user) => {
-            this.isLoadingConsulta = false;
-            if (res[0]) {
-              this.usuario = user[0];
-              this.isUsuarioEncontrado = true;
-            }
-          });
+        this.usuario = await this.consultaUsuarioPorDocumento(documento);
+        if (this.usuario) {
+          this.isUsuarioEncontrado = true;
+        }
       });
   }
 
-  async confirmar() {
-    if (this.isUsuarioEncontrado) {
-      this.guardarReserva();
-    }
+  consultaUsuarioPorDocumento(documento: string) {
+    return new Promise<Usuario>((resolve) => {
+      this.usuarioService.consultarPorDocumento(documento).subscribe((user) => {
+          this.isLoadingConsulta = false;
+          resolve(user[0])     
+      });
+    })
+  }
 
+  confirmar() {
+    if (this.isUsuarioEncontrado) {
+      this.guardarReservaUsuarioExistente();
+    } else {
+      this.guardarReservaUsuarioNuevo();
+    }
+  }
+
+  async guardarReservaUsuarioExistente() {
+    let isLogado = await this.loginUser();
+    if (isLogado) {
+      this.guardarReserva();
+    } else {
+      this.notificationService.showError(
+        'El documento o la contraseña son incorrectos'
+      );
+    }
+  }
+
+  async guardarReservaUsuarioNuevo() {
     if (await this.guardarUsuario()) {
       this.guardarReserva();
     }
   }
 
+  async guardarUsuario() {
+    let data = {
+      ...this.userForm.value,
+      documento: this.documento.value,
+    };
+    return new Promise<boolean>((resolve) => {
+      this.usuarioService.guardar(data).subscribe(async (res) => {
+        this.usuario = await this.consultaUsuarioPorDocumento(this.documento.value);
+        if (await this.loginUser()) {
+          resolve(res);
+        }
+      });
+    });
+  }
+
+  loginUser() {
+    return new Promise<boolean>((resolve) => {
+      this.usuarioService
+        .login(this.documento.value, this.password.value)
+        .subscribe((data) => {
+          localStorage.setItem('user', JSON.stringify(this.usuario));
+          resolve(data);
+        });
+    });
+  }
+
   guardarReserva() {
     let reserva: Reserva = {
-      id: 0,
-      fecha: '10-04-2021',
+      fecha: this.reservaService.fechaSeleccionada,
       hora: this.reservaService.horaSelecionada.horaInicial,
       estado: 'RESERVADO',
       valor: this.reservaService.escenarioSeleccionado.valor,
-      escenario_id: this.reservaService.escenarioSeleccionado.id,
+      escenarioId: this.reservaService.escenarioSeleccionado.id,
+      usuarioId: this.usuario.id,
     };
 
     this.reservaService.guardar(reserva).subscribe((res) => {
@@ -101,32 +143,25 @@ export class ConfirmarReservaComponent implements OnInit {
         this.notificationService.showSucces(
           'Se ha realizado la reserva, te esperamos en el juego'
         );
-
         this.router.navigateByUrl('/usuario/perfil');
       }
     });
   }
 
-  async guardarUsuario() {
-    let data = {
-      ...this.usuarioForm.usuarioForm.value,
-      documento: this.documento.value,
-    };
 
-    return new Promise<boolean>((resolve) => {
-      this.usuarioService.guardar(data).subscribe((res) => {
-        resolve(res);
-      });
-    });
+
+  userForm: FormGroup = new FormGroup({
+    nombres: new FormControl('', [Validators.required]),
+  });
+
+  getFormUsuario(userForm: FormGroup) {
+    this.userForm = userForm;
   }
 
   get habilitarBoton() {
     if (this.isUsuarioEncontrado) {
       return false;
     }
-    if (this.usuarioForm) {
-      return this.usuarioForm.usuarioForm.invalid;
-    }
-    return true;
+    return this.userForm.invalid;
   }
 }

@@ -7,12 +7,12 @@
         <mat-card style="width: 250px">
           <div class="flex flex-auto">
             <div style="width: 50%">
-              <p>Producto</p>
+              <p>Cancha</p>
               <p>Valor</p>
             </div>
             <div>
-              <p>{{ escenarioSeleccionado.nombre }}</p>
-              <p>{{ escenarioSeleccionado.valor }}</p>
+              <p>{{ escenarioSeleccionado.nombre | firstMayus }}</p>
+              <p>{{ escenarioSeleccionado.valor | currency  }}</p>
             </div>
           </div>
           <mat-divider></mat-divider>
@@ -36,6 +36,7 @@
                 <mat-form-field validar class="example-full-width" appearance="fill">
                     <mat-label>Documento</mat-label>
                     <input
+                      id="documento"
                       type="email"
                       matInput
                       [formControl]="documento"
@@ -48,11 +49,28 @@
           <mat-progress-bar mode="indeterminate" *ngIf="isLoadingConsulta"></mat-progress-bar>
           <mat-divider></mat-divider>
 
-          <app-form-usuario [usuario]="usuario" *ngIf="!isUsuarioEncontrado"></app-form-usuario>
+          <app-form-usuario [usuario]="usuario" *ngIf="!isUsuarioEncontrado" (usuarioFormEvent)="getFormUsuario($event)"></app-form-usuario>
+
+        
+          <div *ngIf="isUsuarioEncontrado">
+            <h2>Ya estás registrado, ingresa tu contraseña.</h2>
+            <mat-form-field validar class="example-full-width" appearance="fill">
+                <mat-label>Contraseña</mat-label>
+                <input
+                  id="password"
+                  type="text"
+                  matInput
+                  [formControl]="password"
+                  placeholder="Ingresa tu contraseña"
+                />
+              </mat-form-field>
+        </div>
+
+          
           
 
           <div class="flex justify-content-end">
-            <button (click)="confirmar()" [disabled]=habilitarBoton mat-raised-button color="primary" style="margin: 16px" >
+            <button id="btn_confirmar" (click)="confirmar()" [disabled]=habilitarBoton mat-raised-button color="primary" style="margin: 16px" >
               CONFIRMAR
             </button>
           </div>
