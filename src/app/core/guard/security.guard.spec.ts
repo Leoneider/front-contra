@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HomeComponent } from '@pages/home/home.component';
+import { HomeComponent } from 'src/app/feature/page/home/home.component';
 import { SecurityGuard } from './security.guard';
 
 describe('AuthGuard', () => {
@@ -9,7 +9,7 @@ describe('AuthGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [  RouterTestingModule.withRoutes([
-        { path: 'home', component: HomeComponent },
+        { path: 'pages/home', component: HomeComponent },
       ])]
     });
     guard = TestBed.inject(SecurityGuard);

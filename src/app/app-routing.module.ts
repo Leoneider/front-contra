@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SecurityGuard } from '@core/guard/security.guard';
-import { NotFoundComponent } from './feature/pages/not-found/not-found.component';
+import { NotFoundComponent } from './feature/page/not-found/not-found.component';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 
@@ -14,7 +14,7 @@ export const routes: Routes = [
       {
         path: 'pages',
         loadChildren: () =>
-          import('./feature/pages/page.module').then((mod) => mod.PageModule),
+          import('./feature/page/page.module').then((mod) => mod.PageModule),
       },
       {
         path: 'escenario',

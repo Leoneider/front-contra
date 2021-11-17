@@ -4,9 +4,10 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpService } from '@core/services/http.service';
 import { NotificationService } from '@core/services/notification.service';
-import { HomeComponent } from '@pages/home/home.component';
+import { DoceHorasPipe } from '@shared/pipe/doce-horas.pipe';
 import { NotifierModule } from 'angular-notifier';
 import { EscenarioService } from 'src/app/feature/escenario/shared/service/escenario.service';
+import { HomeComponent } from 'src/app/feature/page/home/home.component';
 
 import { AuthLayoutComponent } from './auth-layout.component';
 
@@ -17,12 +18,12 @@ describe('AuthLayoutComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports:[RouterTestingModule.withRoutes([
-        { path: 'home', component: HomeComponent },
+        { path: 'pages/home', component: HomeComponent },
       ]),
     HttpClientTestingModule,
     NotifierModule],
       providers: [HttpService, EscenarioService, NotificationService],
-      declarations: [ AuthLayoutComponent ],
+      declarations: [ AuthLayoutComponent, DoceHorasPipe ],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();

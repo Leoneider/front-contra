@@ -109,7 +109,6 @@ export class ConfirmarReservaComponent implements OnInit {
     };
     return new Promise<boolean>((resolve) => {
       this.usuarioService.guardar(data).subscribe(async (res) => {
-        this.password.setValue(this.userForm.get('contrasena').value);
         this.usuario = await this.consultaUsuarioPorDocumento(this.documento.value);
         if (await this.loginUser()) {
           resolve(res);

@@ -29,6 +29,9 @@
       ],
       "@shared/*": [
         "src/app/shared/*"
+      ],
+      "@page/*": [
+        "src/app/page/*"
       ]
     }
   },

@@ -7,12 +7,12 @@
         <mat-card style="width: 250px">
           <div class="flex flex-auto">
             <div style="width: 50%">
-              <p>Producto</p>
+              <p>Cancha</p>
               <p>Valor</p>
             </div>
             <div>
-              <p>{{ escenarioSeleccionado.nombre }}</p>
-              <p>{{ escenarioSeleccionado.valor }}</p>
+              <p>{{ escenarioSeleccionado.nombre | firstMayus }}</p>
+              <p>{{ escenarioSeleccionado.valor | currency  }}</p>
             </div>
           </div>
           <mat-divider></mat-divider>

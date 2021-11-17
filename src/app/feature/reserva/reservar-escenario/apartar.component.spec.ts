@@ -5,31 +5,19 @@ import { HttpService } from '@core/services/http.service';
 import { NotificationService } from '@core/services/notification.service';
 import { NotifierModule } from 'angular-notifier';
 import { ReservaService } from '../shared/services/reserva.service';
-import * as Rx from 'rxjs';
 import { ApartarComponent } from './apartar.component';
 import { ConfirmarReservaComponent } from '../confirmar-reserva/confirmar-reserva.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { DoceHorasPipe } from '@shared/pipe/doce-horas.pipe';
+import { DatePipe } from '@angular/common';
+import { ReservaServiceStub } from 'test/reserva-service-stub';
+import { escenario } from 'test/mocks/escenario';
 
 describe('ApartarComponent', () => {
   let component: ApartarComponent;
   let fixture: ComponentFixture<ApartarComponent>;
-  let reservaMockService: Partial<ReservaService>;
   let notificationService: NotificationService;
-
-  reservaMockService = {
-    escenarioSeleccionado: {
-      id: 1,
-      valor: 70000,
-      nombre: 'Maria Luna',
-      direccion: 'xxxx',
-      imagen: 'xxxxxx',
-      horaInicial: 17,
-      horaFinal: 20,
-    },
-    horaSelecionada: { horaInicial: 18, isDisponible: true },
-    
-  };
-
+  
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -39,13 +27,14 @@ describe('ApartarComponent', () => {
         NotifierModule,
         HttpClientTestingModule,
       ],
-      declarations: [ApartarComponent, ConfirmarReservaComponent],
+      declarations: [ApartarComponent, ConfirmarReservaComponent, DoceHorasPipe],
       providers: [
+        DatePipe,
         HttpService,
         NotificationService,
         {
           provide: ReservaService,
-          useValue: reservaMockService,
+          useClass: ReservaServiceStub,
         },
       ],
       schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]
@@ -67,15 +56,7 @@ describe('ApartarComponent', () => {
     'Calcular horario disponible cuando escenario tiene reservas',
     waitForAsync(() => {
 
-      component.escenario =  {
-        id: 1,
-        valor: 70000,
-        nombre: 'Maria Luna',
-        direccion: 'xxxx',
-        imagen: 'xxxxxx',
-        horaInicial: 17,
-        horaFinal: 20,
-      }
+      component.escenario = escenario;
       fixture.detectChanges();
       component.calcularHorarioDisponible(13, 15);
       expect(component).toBeTruthy();

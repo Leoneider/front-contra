@@ -29,7 +29,7 @@
               {{ escenario.horaFinal | doceHoras }}</mat-card-subtitle
             >
             <mat-card-subtitle>{{
-              escenario.direccion | titlecase
+              escenario.direccion | firstMayus
             }}</mat-card-subtitle>
             <mat-card-title>{{
               escenario.valor | currency: 'COP':'symbol':'1.0-0'

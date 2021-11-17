@@ -10,6 +10,8 @@ import { TrackByPipe } from './pipe/track-by.pipe';
 import { NgMaterialModule } from './ng-material/ng-material.module';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { DoceHorasPipe } from './pipe/doce-horas.pipe';
+import { CurrencyColPipe } from './pipe/currency-col.pipe';
+import { FirstMayusPipe } from './pipe/first-mayus.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { DoceHorasPipe } from './pipe/doce-horas.pipe';
     MensajeErrorCamposSubmitDirective,
     TrackByPipe,
     TopbarComponent,
-    DoceHorasPipe
+    DoceHorasPipe,
+    CurrencyColPipe,
+    FirstMayusPipe
   ],
   imports: [ReactiveFormsModule, FormsModule, NgMaterialModule],
   exports: [
@@ -32,7 +36,9 @@ import { DoceHorasPipe } from './pipe/doce-horas.pipe';
     FormsModule,
     TrackByPipe,
     NgMaterialModule,
-    DoceHorasPipe
+    DoceHorasPipe,
+    FirstMayusPipe,
+    CurrencyColPipe
   ]
 })
 export class SharedModule { }
