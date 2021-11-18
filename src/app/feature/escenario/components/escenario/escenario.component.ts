@@ -8,12 +8,12 @@ import { Escenario } from '../../shared/model/escenario';
   styleUrls: ['./escenario.component.scss'],
 })
 export class EscenarioComponent implements OnInit {
-  @Input() escenarios: Escenario[];
+  @Input() escenarios: Escenario[] = [];
   @Output() selectEscenario = new EventEmitter<Escenario>();
   @Output() filterEscenario = new EventEmitter<string>();
 
   stringFilter = new FormControl('');
-
+  existenEscenario = false;
   selectedEscenario: Escenario = {
     id: 0,
     nombre: '',
@@ -24,7 +24,9 @@ export class EscenarioComponent implements OnInit {
     imagen: '',
   };
 
-  constructor() {}
+  constructor() {
+
+  }
 
   ngOnInit(): void {}
 
