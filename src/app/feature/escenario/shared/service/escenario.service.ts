@@ -16,6 +16,13 @@ export class EscenarioService {
     );
   }
 
+  public consultarPorNombre(filter:string) {
+    return this.http.doGet<Escenario[]>(
+      `${environment.endpointCore}/escenarios/buscar/${filter}`,
+      this.http.optsName('Filtrar escenarios por nombre')
+    );
+  }
+
   public guardar(producto: Escenario) {
     return this.http.doPost<Escenario, boolean>(
       `${environment.endpointCore}/escenarios`,

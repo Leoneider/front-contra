@@ -10,8 +10,9 @@ import { Escenario } from '../../shared/model/escenario';
 export class EscenarioComponent implements OnInit {
   @Input() escenarios: Escenario[];
   @Output() selectEscenario = new EventEmitter<Escenario>();
+  @Output() filterEscenario = new EventEmitter<string>();
 
-  stringFilter = new FormControl("");
+  stringFilter = new FormControl('');
 
   selectedEscenario: Escenario = {
     id: 0,
@@ -32,7 +33,8 @@ export class EscenarioComponent implements OnInit {
     this.selectEscenario.emit(this.selectedEscenario);
   }
 
-  buscarEscenario(){
-    
+  buscarEscenario() {
+    console.log(this.stringFilter.value);
+    this.filterEscenario.emit(this.stringFilter.value);
   }
 }

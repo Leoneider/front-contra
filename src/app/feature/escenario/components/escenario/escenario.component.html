@@ -13,7 +13,7 @@
       </button>
     </mat-form-field>
   </div>
-  <div class="grid">
+  <div class="grid" *ngIf="escenarios.length > 0; else emptyEscenario">
     <div class="col-12 md:col-6 lg:col-4" *ngFor="let escenario of escenarios">
       <div class="flex align-items-center justify-content-center">
         <mat-card
@@ -45,4 +45,10 @@
       </div>
     </div>
   </div>
+  <ng-template #emptyEscenario>
+   <p>
+     No hay datos
+   </p>
+  </ng-template>
+  
 </div>

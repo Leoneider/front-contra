@@ -26,9 +26,19 @@ export class HomeComponent implements OnInit {
   }
 
   obtenerEscenarios() {
-    this.escenarioService.consultar().subscribe((res) => {
-      this.escenarios = res;
+    this.escenarioService.consultar().subscribe((data) => {
+      this.escenarios = data;
     });
+  }
+
+  buscarEscenario(filterString:string){
+    if(filterString){
+      this.escenarioService.consultarPorNombre(filterString).subscribe(data=>{
+        this.escenarios = data;
+      })
+    }else{
+      this.obtenerEscenarios();
+    }
   }
 
   sellecionarEscenario(escenario: Escenario) {
