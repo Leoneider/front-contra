@@ -2,7 +2,7 @@
   <div class="flex">
     <mat-form-field class="example-form-field" appearance="fill">
       <mat-label>Buscar una cancha</mat-label>
-      <input matInput type="text"  [formControl]="stringFilter" />
+      <input matInput type="text" [formControl]="stringFilter" />
       <button
         matSuffix
         mat-icon-button
@@ -46,9 +46,15 @@
     </div>
   </div>
   <ng-template #emptyEscenario>
-   <p>
-     No hay datos
-   </p>
+   
+    <div class="flex flex-column align-items-center">
+      <ng-lottie
+        [options]="options"
+        width="320px"
+        (animationCreated)="animationCreated($event)"
+      ></ng-lottie>
+
+      <h2>No se encontraron canchas con el nombre: <strong> {{ filterBuscado }}</strong></h2>
+    </div>
   </ng-template>
-  
 </div>

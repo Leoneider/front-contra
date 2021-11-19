@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { AnimationItem } from 'lottie-web';
+import { AnimationOptions } from 'ngx-lottie';
 import { Escenario } from '../../shared/model/escenario';
 
 @Component({
@@ -7,7 +9,7 @@ import { Escenario } from '../../shared/model/escenario';
   templateUrl: './escenario.component.html',
   styleUrls: ['./escenario.component.scss'],
 })
-export class EscenarioComponent implements OnInit {
+export class EscenarioComponent {
   @Input() escenarios: Escenario[] = [];
   @Output() selectEscenario = new EventEmitter<Escenario>();
   @Output() filterEscenario = new EventEmitter<string>();
@@ -24,19 +26,24 @@ export class EscenarioComponent implements OnInit {
     imagen: '',
   };
 
-  constructor() {
+  constructor() {}
 
+  options: AnimationOptions = {
+    path: '/assets/search.json',
+  };
+
+  animationCreated(animationItem: AnimationItem): void {
+    console.log(animationItem);
   }
-
-  ngOnInit(): void {}
 
   seleccionar(e: Escenario) {
     this.selectedEscenario = e;
     this.selectEscenario.emit(this.selectedEscenario);
   }
 
+  filterBuscado: string;
   buscarEscenario() {
-    console.log(this.stringFilter.value);
     this.filterEscenario.emit(this.stringFilter.value);
+    this.filterBuscado = this.stringFilter.value;
   }
 }
