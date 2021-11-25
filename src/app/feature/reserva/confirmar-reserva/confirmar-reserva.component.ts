@@ -53,11 +53,13 @@ export class ConfirmarReservaComponent implements OnInit {
   }
 
   isLoadingConsulta = false;
+  isHide = false;
   isUsuarioEncontrado = false;
   inputSubscribeDocumento() {
     this.documento.valueChanges
       .pipe(debounceTime(timeWait), distinctUntilChanged())
       .subscribe( async(documento: string) => {
+       
         this.isLoadingConsulta = true;
         this.isUsuarioEncontrado = false;
         this.usuario = null;
@@ -65,6 +67,7 @@ export class ConfirmarReservaComponent implements OnInit {
         if (this.usuario) {
           this.isUsuarioEncontrado = true;
         }
+        this.isHide = true
       });
   }
 
@@ -113,6 +116,10 @@ export class ConfirmarReservaComponent implements OnInit {
         if (await this.loginUser()) {
           resolve(res);
         }
+      }, error => {
+        this.notificationService.showError(
+          error.error.mensaje
+        );
       });
     });
   }

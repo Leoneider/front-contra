@@ -9,9 +9,9 @@ import { Escenario } from '../model/escenario';
 export class EscenarioService {
   constructor(protected http: HttpService) {}
 
-  public consultar() {
-    return this.http.doGet<Escenario[]>(
-      `${environment.endpointCore}/escenarios`,
+  public consultar(limit:number = 9, offSet:number = 0 ) {
+    return this.http.doGet<any>(
+      `${environment.endpointCore}/escenarios?limit=${limit}&offSet=${offSet}`,
       this.http.optsName('consultar escenarios')
     );
   }

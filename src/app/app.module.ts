@@ -13,7 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import localeEsCo from '@angular/common/locales/es-CO';
 import { registerLocaleData } from '@angular/common';
-registerLocaleData(localeEsCo, 'es-CO');
+registerLocaleData(localeEsCo, 'es-MX');
 
 
 
@@ -74,7 +74,7 @@ const customNotifierOptions: NotifierOptions = {
     HttpClientModule,
   ],
   providers: [CookieService,
-  { provide: LOCALE_ID, useValue: 'es-CO' }],
+  { provide: LOCALE_ID, useValue: 'es-MX' }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

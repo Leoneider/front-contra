@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
 import { Escenario } from '../../shared/model/escenario';
+
 
 @Component({
   selector: 'app-escenario',
@@ -11,8 +13,12 @@ import { Escenario } from '../../shared/model/escenario';
 })
 export class EscenarioComponent {
   @Input() escenarios: Escenario[] = [];
+  @Input() length: number;
+
   @Output() selectEscenario = new EventEmitter<Escenario>();
   @Output() filterEscenario = new EventEmitter<string>();
+  @Output() listEscenarioPaginable = new EventEmitter<PageEvent>();
+  
 
   stringFilter = new FormControl('');
   existenEscenario = false;
@@ -26,7 +32,14 @@ export class EscenarioComponent {
     imagen: '',
   };
 
-  constructor() {}
+   pageSize = 9;
+   // MatPaginator Output
+   pageEvent: PageEvent;
+ 
+
+  constructor() {
+   
+  }
 
   options: AnimationOptions = {
     path: '/assets/search.json',
@@ -46,4 +59,11 @@ export class EscenarioComponent {
     this.filterEscenario.emit(this.stringFilter.value);
     this.filterBuscado = this.stringFilter.value;
   }
+
+  getServerData(event){
+    this.pageEvent = event;
+    this.listEscenarioPaginable.emit(this.pageEvent)
+  }
+
+
 }
