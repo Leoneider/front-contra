@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   obtenerEscenarios() {
     this.escenarioService.consultar().subscribe((res) => {
-      this.escenarios = res;
+      this.escenarios = res.content;
     });
   }
 

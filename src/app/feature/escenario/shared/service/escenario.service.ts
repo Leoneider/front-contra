@@ -10,8 +10,10 @@ export class EscenarioService {
   constructor(protected http: HttpService) {}
 
   public consultar() {
-    return this.http.doGet<Escenario[]>(
-      `${environment.endpointCore}/escenarios`,
+    const limit = 10;
+    const offset = 0
+    return this.http.doGet<any>(
+      `${environment.endpointCore}/escenarios?limit=${limit}&offSet=${offset}`,
       this.http.optsName('consultar escenarios')
     );
   }
