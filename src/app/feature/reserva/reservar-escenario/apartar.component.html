@@ -1,46 +1,30 @@
-<div style="padding: 16px" *ngIf="escenario">
-  <div class="grid">
-    <div class="col-12 md:col-6 lg:col-6">
-      <mat-card class="example-card" style="max-width: 400px">
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title>{{ escenario.nombre }}</mat-card-title>
-          <mat-card-subtitle>{{ escenario.direccion }}</mat-card-subtitle>
-        </mat-card-header>
-        <img
-          mat-card-image
-          src="{{ escenario.imagen }}"
-          alt="Photo of a Shiba Inu"
-        />
-        <mat-card-content>
-          <h1>{{ escenario.valor | currency }}</h1>
-        </mat-card-content>
-      </mat-card>
-    </div>
+<div class="bg-bluegray-50">
+  <div style="padding: 16px" *ngIf="escenario">
+    <div class="grid">
+<!-- 
+      <div class="col-12">
+        <mat-card>
+          <p>Cancha seleccionada:</p>
+        </mat-card>
+      </div> -->
 
-    <div class="col-12 md:col-6 lg:col-6">
-      <h1 class="mb-6">Selecciona el dia y la hora del partido:</h1>
-
-      <div>
-        <mat-form-field class="w-full" color="primary" appearance="fill">
-          <mat-label>Fecha</mat-label>
-          <input
-            matInput
-            [min]="fechaMinimaDeReserva"
-            [matDatepicker]="picker"
-            [formControl]="fechaSeleccionada"
-            (dateChange)="fechaSeleccionadaChange()"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker color="primary"></mat-datepicker>
-        </mat-form-field>
+      <div class="col">
+        <div class="flex justify-content-end">
+          <div class="calendario">
+          <mat-card>
+            <h2>Selecciona la fecha del partido:</h2>
+            <mat-calendar
+              [minDate]="fechaMinimaDeReserva"
+              [selected]="fechaSeleccionada.value"
+              (selectedChange)="fechaSeleccionadaChange($event)"
+            ></mat-calendar>
+          </mat-card>
+          </div>
+        </div>
       </div>
-
-      <div class="flex justify-content-center">
-        <div class="horario">
+      <div class="col">
+        <mat-card class="horario" *ngIf="horasDisponibles.length > 0" [@enterAnimation]>
+          <h2>Horas disponibles:</h2>
           <div
             class="flex flex-grow-1"
             style="height: 40px"
@@ -51,6 +35,9 @@
             <div
               class="flex border-top-1 border-right-1 border-left-1 div-select"
               [class.disabled]="!hora.isDisponible"
+              [class.celda-active]="
+                hora.horaInicial == horaSeleccionada.horaInicial
+              "
               (click)="seleccionarHora(hora)"
               [id]="hora.horaInicial"
             >
@@ -81,23 +68,36 @@
           </div>
 
           <div class="flex">
-            <div class="hora">{{ this.escenario.horaFinal + 1 | doceHoras }}</div>
+            <div class="hora">
+              {{ this.escenario.horaFinal + 1 | doceHoras }}
+            </div>
             <div class="border-top-1" style="width: 100%"></div>
           </div>
-        </div>
+        </mat-card>
+
+        <!-- <ng-template #name>
+          <div class="flex flex-column justify-content-center align-items-center" style="min-height: 433px;">
+            <ng-lottie
+              [options]="options"
+              width="320px"
+            ></ng-lottie>
+            </div>
+        </ng-template> -->
+        
       </div>
 
-      <div class="flex justify-content-center">
-        <button
-          id="btn_confirmar_hora"
-          (click)="confirmarHora()"
-          [disabled]="isSeleccionado"
-          mat-raised-button
-          color="primary"
-          style="margin: 16px"
-        >
-          CONFIRMAR HORA
-        </button>
+      <div class="col-12">
+        <div class="flex justify-content-end">
+          <button
+            id="btn_confirmar_hora"
+            (click)="confirmarHora()"
+            [disabled]="isSeleccionado"
+            mat-raised-button
+            color="primary"
+          >
+            CONFIRMAR HORA
+          </button>
+        </div>
       </div>
     </div>
   </div>

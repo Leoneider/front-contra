@@ -2,7 +2,7 @@
   <div class="flex">
     <mat-form-field class="example-form-field" appearance="fill">
       <mat-label>Buscar una cancha</mat-label>
-      <input matInput type="text"  [formControl]="stringFilter" />
+      <input matInput type="text" [formControl]="stringFilter" />
       <button
         matSuffix
         mat-icon-button
@@ -13,36 +13,69 @@
       </button>
     </mat-form-field>
   </div>
-  <div class="grid">
-    <div class="col-12 md:col-6 lg:col-4" *ngFor="let escenario of escenarios">
-      <div class="flex align-items-center justify-content-center">
-        <mat-card
-          class="example-card"
-          [id]="escenario.id"
-          (click)="seleccionar(escenario)"
-          [class.active]="escenario.id == selectedEscenario.id"
+  <ng-container *ngIf="escenarios.length > 0; else emptyEscenario">
+    <div class="grid">
+      <div
+        class="col-12 md:col-6 lg:col-4"
+        *ngFor="let escenario of escenarios"
+      >
+        <div class="flex align-items-center justify-content-center">
+          <mat-card
+            class="example-card"
+            [id]="escenario.id"
+            (click)="seleccionar(escenario)"
+            [class.active]="escenario.id == selectedEscenario.id"
+          >
+            <mat-card-title-group>
+              <mat-card-title>{{
+                escenario.nombre | titlecase
+              }}</mat-card-title>
+              <mat-card-subtitle class="m-0"
+                >De: {{ escenario.horaInicial | doceHoras }} a:
+                {{ escenario.horaFinal | doceHoras }}</mat-card-subtitle
+              >
+              <mat-card-subtitle>{{
+                escenario.direccion | firstMayus
+              }}</mat-card-subtitle>
+              <mat-card-title>{{
+                escenario.valor | currency: 'COP':'symbol':'1.0-0'
+              }}</mat-card-title>
+              <img
+                class="border-round"
+                mat-card-md-image
+                src="{{ escenario.imagen }}"
+                alt="escenario"
+              />
+            </mat-card-title-group>
+          </mat-card>
+        </div>
+      </div>
+
+      <div class="col-12">
+
+        <mat-paginator
+          [length]="length"
+          [pageSize]="pageSize"
+          [hidePageSize]="true"
+          (page)="getServerData($event)"
         >
-          <mat-card-title-group>
-            <mat-card-title>{{ escenario.nombre | titlecase }}</mat-card-title>
-            <mat-card-subtitle class="m-0"
-              >De: {{ escenario.horaInicial | doceHoras }} a:
-              {{ escenario.horaFinal | doceHoras }}</mat-card-subtitle
-            >
-            <mat-card-subtitle>{{
-              escenario.direccion | firstMayus
-            }}</mat-card-subtitle>
-            <mat-card-title>{{
-              escenario.valor | currency: 'COP':'symbol':'1.0-0'
-            }}</mat-card-title>
-            <img
-              class="border-round"
-              mat-card-md-image
-              src="{{ escenario.imagen }}"
-              alt="escenario"
-            />
-          </mat-card-title-group>
-        </mat-card>
+        </mat-paginator>
       </div>
     </div>
-  </div>
+  </ng-container>
+
+  <ng-template #emptyEscenario>
+    <div class="flex flex-column align-items-center">
+      <ng-lottie
+        [options]="options"
+        width="320px"
+        (animationCreated)="animationCreated($event)"
+      ></ng-lottie>
+
+      <h2>
+        No se encontraron canchas con el nombre:
+        <strong> {{ filterBuscado }}</strong>
+      </h2>
+    </div>
+  </ng-template>
 </div>

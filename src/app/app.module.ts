@@ -9,16 +9,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { HttpClientModule } from '@angular/common/http';
-import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 
 
-import localeEsCo from "@angular/common/locales/es-CO";
-import { registerLocaleData } from "@angular/common";
-registerLocaleData(localeEsCo, "es-CO");
+import localeEsCo from '@angular/common/locales/es-CO';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEsCo, 'es-MX');
 
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true
-};
+
 
 
 /**
@@ -75,13 +72,9 @@ const customNotifierOptions: NotifierOptions = {
     LayoutModule,
     NotifierModule.withConfig(customNotifierOptions),
     HttpClientModule,
-    PerfectScrollbarModule
   ],
-  providers: [CookieService, {
-    provide: PERFECT_SCROLLBAR_CONFIG,
-    useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-  },
-  { provide: LOCALE_ID, useValue: 'es-CO' }],
+  providers: [CookieService,
+  { provide: LOCALE_ID, useValue: 'es-MX' }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

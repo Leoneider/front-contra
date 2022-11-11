@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 @NgModule({
   declarations: [AdminLayoutComponent, AuthLayoutComponent],
@@ -15,6 +16,8 @@ import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
+    PerfectScrollbarModule
+    
   ],
   exports: [AdminLayoutComponent, AuthLayoutComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

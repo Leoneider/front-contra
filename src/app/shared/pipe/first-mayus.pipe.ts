@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FirstMayusPipe implements PipeTransform {
 
   transform(texto: string): string {
-    return texto[0].toUpperCase() + texto.substr(1).toLowerCase();;
+    return texto[0].toUpperCase() + texto.substr(1).toLowerCase();
   }
 
 }

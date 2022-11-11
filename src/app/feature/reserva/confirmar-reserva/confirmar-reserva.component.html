@@ -1,80 +1,97 @@
-<div style="padding: 16px">
-  <div class="grid">
-    <div class="col-12 md:col-6 lg:col-6">
-      <h1>Confirma tu reserva</h1>
+<div class="bg-bluegray-50">
+  <div style="padding: 16px">
+    <div class="grid">
+      <div class="col">
+        <div
+          class="flex flex-column justify-content-center align-items-center"
+          *ngIf="escenarioSeleccionado"
+        >
+          <mat-card class="mb-3" style="width: 320px">
+            <h1>Resumen de tu reserva</h1>
+            <div class="flex flex-auto">
+              <div style="width: 50%">
+                <p>Cancha</p>
+                <p>Valor</p>
+              </div>
+              <div>
+                <p>{{ escenarioSeleccionado.nombre | firstMayus }}</p>
+                <p>{{ escenarioSeleccionado.valor | currencyCOP }}</p>
+              </div>
+            </div>
+          </mat-card>
 
-      <div class="flex justify-content-center align-items-center" *ngIf="escenarioSeleccionado">
-        <mat-card style="width: 250px">
-          <div class="flex flex-auto">
-            <div style="width: 50%">
-              <p>Cancha</p>
-              <p>Valor</p>
-            </div>
-            <div>
-              <p>{{ escenarioSeleccionado.nombre | firstMayus }}</p>
-              <p>{{ escenarioSeleccionado.valor | currency  }}</p>
-            </div>
-          </div>
-          <mat-divider></mat-divider>
-          <div class="flex">
-            <div style="width: 50%">
-              <p>Pagas</p>
-            </div>
-            <div>
-              <p>{{ escenarioSeleccionado.valor }}</p>
-            </div>
-          </div>
-        </mat-card>
-      </div>
-    </div>
+          <div
+            class="flex flex-column justify-content-center align-items-center"
+            style="width: 320px"
+          >
+            <mat-card class="example-full-width">
+              <h1>Ingresa tu documento:</h1>
+              <div>
+                <mat-form-field
+                  validar
+                  class="example-full-width"
+                  appearance="fill"
+                >
+                  <mat-label>Documento</mat-label>
+                  <input
+                    id="documento"
+                    type="email"
+                    matInput
+                    [formControl]="documento"
+                    placeholder="Ingresa el número de tu documento"
+                  />
+                </mat-form-field>
+              </div>
 
-    <div class="col-12 md:col-6 lg:col-6">
-      <h1>Ingresa tus datos:</h1>
-      <div class="flex flex-column justify-content-center align-items-center">
-        <mat-card class="example-full-width">
-            <div>
-                <mat-form-field validar class="example-full-width" appearance="fill">
-                    <mat-label>Documento</mat-label>
+              <mat-progress-bar
+                mode="indeterminate"
+                *ngIf="isLoadingConsulta"
+              ></mat-progress-bar>
+
+             
+
+              <div *ngIf="isHide">
+                <mat-divider></mat-divider>
+                <app-form-usuario
+                  [usuario]="usuario"
+                  *ngIf="!isUsuarioEncontrado"
+                  (usuarioFormEvent)="getFormUsuario($event)"
+                ></app-form-usuario>
+
+                <div *ngIf="isUsuarioEncontrado">
+                  <h2>Ya estás registrado, ingresa tu contraseña.</h2>
+                  <mat-form-field
+                    validar
+                    class="example-full-width"
+                    appearance="fill"
+                  >
+                    <mat-label>Contraseña</mat-label>
                     <input
-                      id="documento"
-                      type="email"
+                      id="password"
+                      type="text"
                       matInput
-                      [formControl]="documento"
-                      placeholder="Ingresa el número de tu documento"
+                      [formControl]="password"
+                      placeholder="Ingresa tu contraseña"
                     />
                   </mat-form-field>
-            </div>
-         
+                </div>
+              </div>
 
-          <mat-progress-bar mode="indeterminate" *ngIf="isLoadingConsulta"></mat-progress-bar>
-          <mat-divider></mat-divider>
-
-          <app-form-usuario [usuario]="usuario" *ngIf="!isUsuarioEncontrado" (usuarioFormEvent)="getFormUsuario($event)"></app-form-usuario>
-
-        
-          <div *ngIf="isUsuarioEncontrado">
-            <h2>Ya estás registrado, ingresa tu contraseña.</h2>
-            <mat-form-field validar class="example-full-width" appearance="fill">
-                <mat-label>Contraseña</mat-label>
-                <input
-                  id="password"
-                  type="text"
-                  matInput
-                  [formControl]="password"
-                  placeholder="Ingresa tu contraseña"
-                />
-              </mat-form-field>
-        </div>
-
-          
-          
-
-          <div class="flex justify-content-end">
-            <button id="btn_confirmar" (click)="confirmar()" [disabled]=habilitarBoton mat-raised-button color="primary" style="margin: 16px" >
-              CONFIRMAR
-            </button>
+              <div class="flex justify-content-end">
+                <button
+                  id="btn_confirmar"
+                  (click)="confirmar()"
+                  [disabled]="habilitarBoton"
+                  mat-raised-button
+                  color="primary"
+                  style="margin: 16px"
+                >
+                  CONFIRMAR
+                </button>
+              </div>
+            </mat-card>
           </div>
-        </mat-card>
+        </div>
       </div>
     </div>
   </div>

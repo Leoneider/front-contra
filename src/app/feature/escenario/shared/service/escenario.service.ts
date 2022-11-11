@@ -9,12 +9,17 @@ import { Escenario } from '../model/escenario';
 export class EscenarioService {
   constructor(protected http: HttpService) {}
 
-  public consultar() {
-    const limit = 10;
-    const offset = 0
+  public consultar(limit:number = 9, offSet:number = 0 ) {
     return this.http.doGet<any>(
-      `${environment.endpointCore}/escenarios?limit=${limit}&offSet=${offset}`,
+      `${environment.endpointCore}/escenarios?limit=${limit}&offSet=${offSet}`,
       this.http.optsName('consultar escenarios')
+    );
+  }
+
+  public consultarPorNombre(filter:string) {
+    return this.http.doGet<Escenario[]>(
+      `${environment.endpointCore}/escenarios/buscar/${filter}`,
+      this.http.optsName('Filtrar escenarios por nombre')
     );
   }
 

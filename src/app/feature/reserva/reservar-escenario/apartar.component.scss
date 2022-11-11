@@ -1,14 +1,15 @@
-.example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
-  }
+
 
   .horario{
-    width: 400px;
+    width: 350px;
     .border-top-1{
         border-color: #dadce0;
     }
 
+  }
+
+  .calendario{
+    width: 320px;
   }
 
   .hora{
@@ -42,4 +43,8 @@
   &.active {
       opacity: 1;
   }
+}
+
+.celda-active{
+  background-color: #e8f5e9;
 }

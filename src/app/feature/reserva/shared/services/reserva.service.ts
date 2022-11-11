@@ -32,7 +32,7 @@ export class ReservaService {
 
   public consultarPorIdUsuario(idUsuario: number) {
     return this.http.doGet<Reserva[]>(
-      `${environment.endpointCore}/reserva?usuario_id=${idUsuario}`,
+      `${environment.endpointCore}/reservas/usuario/${idUsuario}`,
       this.http.optsName('consultar reservas por usuario')
     );
   }

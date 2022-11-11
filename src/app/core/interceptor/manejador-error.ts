@@ -10,6 +10,7 @@ export class ManejadorError implements ErrorHandler {
   handleError(error: string | Error): void {
     const mensajeError = this.mensajePorDefecto(error);
     this.imprimirErrorConsola(mensajeError);
+
   }
 
   mensajePorDefecto(error) {
@@ -30,6 +31,7 @@ export class ManejadorError implements ErrorHandler {
       path: window.location.href,
       mensaje,
     };
+
     if (!environment.production) {
       window.console.error('Error inesperado:\n', respuesta);
     }
